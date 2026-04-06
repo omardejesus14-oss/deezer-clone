@@ -13,6 +13,7 @@ export default function RegisterPassword( {email}) {
   const [password, setPassword] = useState("");
   const [touched, setTouched] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [dirty, setDirty] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -77,6 +78,7 @@ export default function RegisterPassword( {email}) {
 
   const isValid =
     password.length >= 8 && /[a-zA-Z]/.test(password) && /[0-9]/.test(password);
+     const isDisabled = dirty && !isValid;
 
   const handleNext = () => {
     // Pasamos el email a la siguiente página por la URL
@@ -126,9 +128,8 @@ export default function RegisterPassword( {email}) {
             <Custom
               onBlur={() => setTouched(true)}
               value={password}
-              onchange={(value) => {
-                setPassword(value);
-                if (!touched) setTouched(true); // 🔥 clave
+               onchange={(value) => {setPassword(value);
+                if (!dirty) setDirty(true); 
               }}
               secure
                 error={touched && errors.length > 0}
@@ -196,13 +197,17 @@ export default function RegisterPassword( {email}) {
             </div>
           )}
 
-          <button disabled={!isValid}
-                  type="submit" className={`text-center w-full h-[38px] rounded-[8px] bg-[#121216]  ${isValid 
-                  ? "bg-[#a238ff] text-white hover:bg-[#8b2be2]" 
-                  : "bg-[#2a2a33] text-gray-400 cursor-not-allowed"
-    }`}>  
-              continuar
-              </button>
+           <button
+            disabled={isDisabled}
+            type="submit"
+            className={`text-center w-full h-[38px] rounded-[8px] transition-all ${
+              isDisabled
+      ? "bg-[#2a2a33] text-gray-400"
+      : "bg-[#a238ff] text-white"
+  }`}
+          >
+            continuar
+          </button>
         </form>
       </div>
     </div>

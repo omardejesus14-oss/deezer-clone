@@ -7,15 +7,18 @@ import NavBar from "./nagvar";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation"; 
 import {SlArrowUp , SlArrowDown } from "react-icons/sl";
-import { Router } from "next/router";
+import { GoStop } from "react-icons/go";
 
-   
+
+
 export default function Register () {
 
   // Manejo de estados individuales
 const [username, setUsername] = useState("");
 const [age, setAge] = useState("");
 const [gender, setGender] = useState(""); // Identidad
+const [errors, setErrors] = useState({username: "", age:  "", gender: ""});
+
 
 // Hook para obtener datos de la URL de los pasos anteriores
 const router = useRouter();
@@ -42,6 +45,29 @@ const supabase = createClient();
 
 // handleSignUp: Función principal de envío
 const handleSignUp = async () => { 
+  
+  let currentErrors = {username: "", age:  "", gender: ""};
+  let hasErrors= false
+
+  if (username.trim()===""){
+    currentErrors.username = "El campo no puede estar vacío";
+    hasErrors = true;
+  }
+
+
+  if (age.trim()===""){
+    currentErrors.age = "El campo no puede estar vacío";
+    hasErrors = true;
+  }
+
+  if (gender.trim()===""){
+    currentErrors.gender = "El campo no puede estar vacío";
+    hasErrors = true;
+  }
+
+  setErrors(currentErrors);
+
+  if (hasErrors) return; // Si hay errores, no continuamos
 
   try {
     // 1. Registro en la sección de Autenticación
@@ -126,12 +152,26 @@ const handleSignUp = async () => {
       <div className="flex flex-col gap-2 text-[10px]">
         <label className="text-[10px] text-gray-400 font-medium">Nombre de usuario</label>
         <input
+            className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none transition-all
+                  ${
+                    errors.username
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-[#23232c]   focus:border-[#a238ff] border-[1px]"
+                  }
+                  `}
           type="text"
           suppressHydrationWarning={true}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="bg-[#23232d] border border-transparent focus:border-[#a238ff] outline-none p-3 rounded-md transition-all h-[38px] px-[16px] "
+          
         />
+        {
+          errors.username && (
+               <span className="text-red-500 text-[10px] flex gap-2 items-center"> <GoStop size={12}/> {errors.username}</span>
+            
+          )
+        }
+     
       </div>
 
       {/* Input de Edad */}
@@ -144,7 +184,14 @@ const handleSignUp = async () => {
       onChange={(e) => setAge(e.target.value)}
       placeholder=""
       suppressHydrationWarning={true}
-      className="bg-[#23232d] border border-transparent focus:border-[#a238ff] outline-none p-3 rounded-md w-full h-[38px] appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all"
+    
+      className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all
+                  ${
+                    errors.age
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-[#23232c]   focus:border-[#a238ff] border-[1px]"
+                  }
+                  `}
     />
 
     <div className="absolute right-0 top-0 h-full flex flex-col justify-center align-items gap-1 border-l-[#444] border-l px-1">
@@ -163,18 +210,33 @@ const handleSignUp = async () => {
         <SlArrowDown size={12} />
       </button>
     </div>
+       
+     
   </div>
+  {
+          errors.age && (
+               <span className="text-red-500 text-[10px] flex gap-2 items-center"> <GoStop size={12}/>{errors.age}</span>
+            
+          )
+        }
 </div>
 
       {/* Selector de Identidad */}
-     <div className="flex flex-col gap-">
+     <div className="flex flex-col gap-2 ">
   <label className="text-[10px] text-gray-400 font-medium">Identidad</label>
   <div className="relative w-full">
     <select
       value={gender}
       onChange={(e) => setGender(e.target.value)}
       suppressHydrationWarning={true}
-      className="bg-[#23232d] text-[13px] border border-transparent focus:border-[#a238ff] outline-none px-3 rounded-md  w-full h-[38px] appearance-none cursor-pointer  transition-all text-white flex items-center "
+
+      className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none appearance-none cursor-pointer  transition-all text-white flex items-center
+                  ${
+                    errors.username
+                      ? "border-red-500 focus:border-red-500"
+                      : "border-[#23232c]   focus:border-[#a238ff] border-[1px]"
+                  }
+                  `}
     >
       <option value="" disabled hidden>Identidad</option>
       <option value="mujer">Mujer</option>
@@ -187,6 +249,13 @@ const handleSignUp = async () => {
       <SlArrowDown size={8} />
     </div>
   </div>
+        {
+          errors.gender && (
+               <span className="text-red-500 text-[10px] flex gap-2 items-center"> <GoStop size={12}/>{errors.gender}</span>
+            
+          )
+        }
+     
 </div>
 
 
@@ -207,7 +276,7 @@ const handleSignUp = async () => {
 
       {/* Botón Final */}
       <button   type="submit"
-        className="bg-[#a238ff] text-[14px] hover:bg-[#b35cff] text-white font-bold py-2 rounded-[10px] transition-colors shadow-lg shadow-purple-500/20 text-center w-full mt-4">
+        className="bg-[#a238ff] text-[14px] hover:bg-[#b35cff] text-white font-bold py-2 rounded-[10px] transition-colors  text-center w-full mt-4">
       
       
         Regístrate gratis

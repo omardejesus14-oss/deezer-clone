@@ -10,6 +10,7 @@ export default function RegisterEmail() {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
   const [touched, setTouched] = useState(false);
+  const [dirty, setDirty] = useState(false);
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar el formato del email
   const router = useRouter();
 
@@ -18,15 +19,19 @@ export default function RegisterEmail() {
     if (!email) {
       setErrors(" El campo no puede estar vacío");
     } else if (!emailRegex.test(email)) {
-      setErrors("Formato de correo inválido");
+      setErrors("El formato de tu dirección de email no es válido");
     } else {
       setErrors("");
     }
   }, [email, touched]);
 
-  const isValid = emailRegex.test(email) 
+  const isValid = emailRegex.test(email);
+  const isDisabled = dirty && !isValid;
 
   const handleNext = () => {
+    setTouched(true);
+
+    if (!isValid) return;
     // Pasamos el email a la siguiente página por la URL
     router.push(`/password?email=${encodeURIComponent(email)}`);
   };
@@ -53,7 +58,7 @@ export default function RegisterEmail() {
             </label>
             <input
               onBlur={() => setTouched(true)}
-              className={`w-full bg-[#121216] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none transition-all
+              className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none transition-all
                   ${
                     errors
                       ? "border-red-500 focus:border-red-500"
@@ -63,22 +68,25 @@ export default function RegisterEmail() {
               type="email"
               placeholder="Direccion de email"
               value={email}
-              onChange={(e) => setEmail(e.target.value.trim())}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (!dirty) setDirty(true); // 👈 SOLO para botón
+              }}
             />
-            {errors && (
+            {touched && !isValid && (
               <span className="text-red-500 text-[12px] flex gap-2 iten-center">
-                <GoStop size={16} /> {errors}
+                <GoStop size={12} /> {errors}
               </span>
             )}
           </div>
 
           <button
-            disabled={!isValid}
+            disabled={isDisabled}
             type="submit"
-            className={`text-center w-full h-[38px] rounded-[8px] bg-[#121216]  ${
-              isValid
-                ? "bg-[#a238ff] text-white hover:bg-[#8b2be2]"
-                : "bg-[#2a2a33] text-gray-400 cursor-not-allowed"
+            className={`text-center w-full h-[38px] rounded-[8px] transition-all ${
+              isDisabled
+                ? "bg-[#2a2a33] text-gray-400"
+                : "bg-[#a238ff] text-white"
             }`}
           >
             continuar
