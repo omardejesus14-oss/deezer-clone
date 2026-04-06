@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Custom from "./custon";
 import { GoIssueClosed, GoStop } from "react-icons/go";
+import { GoChevronLeft } from "react-icons/go";
 
 export default function RegisterPassword( {email}) {
   const [errors, setErrors] = useState([]);
@@ -98,19 +99,13 @@ export default function RegisterPassword( {email}) {
     <div className="w-full min-h-screen flex flex-col items-center bg-[#000000] text-[#fff] font-sans">
       <NavBar />
 
-      <div className="mt-[110px] flex flex-col  w-full max-w-[410px]  ">
-        <div className="text-gray-400 text-sm mb-4 flex items-center gap-2">
-          <Link href="/email"> &lt;</Link>
-          <span
-            className="text-[10px]
-                  "
-          >
-            {" "}
-            Paso 2 de 3
-          </span>
+      <div className="mt-[96px] flex flex-col  w-full max-w-[410px]  ">
+        <div className="text-[11px] mb-3 flex items-center ">
+          <Link className="flex gap-1 items-center text-gray-400" href="/email"> <GoChevronLeft size={22} /> Paso 2 de 3</Link>
+         
         </div>
 
-        <h2 className="text-[32px] font-[900] leading-[0.8] tracking-[-0.05em] text-white [transform:scaleY(1.3)] origin-top mb-16">
+        <h2 className="text-[32px] font-[900] leading-[0.8] tracking-[-0.05em] text-white [transform:scaleY(1.3)] origin-top mb-13">
           Crear una contraseña
         </h2>
 
