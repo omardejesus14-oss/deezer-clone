@@ -10,6 +10,7 @@ export default function Custom({
   value,
   error,
   isValid,
+   onBlur
 }) {
   const [mostrar, setMostrar] = useState(false);
 
@@ -27,7 +28,7 @@ export default function Custom({
 
   return (
     <div
-      className={`w-full flex bg-[#121216] border rounded-[8px] py-[5px] px-[16px] text-white transition-all
+      className={`w-full flex bg-[#121216] border rounded-[8px] h-[38px] px-[16px] text-white transition-all
         ${
           error
             ? "border-red-500 focus-within:border-red-500"
@@ -39,6 +40,7 @@ export default function Custom({
         className="bg-transparent border-none outline-none w-[98%]"
         placeholder={placeholder}
         value={value}
+          onBlur={onBlur}
         onChange={(e) => onchange(e.target.value)}
         type={mostrar ? "text" : "password"}
       />
@@ -46,7 +48,7 @@ export default function Custom({
       {secure && (
         <div
           onClick={toggleVisibility}
-          className="cursor-pointer text-slate-400 hover:text-indigo-600 transition-colors ml-2"
+          className="cursor-pointer flex items-center text-slate-400 hover:text-indigo-600 transition-colors ml-2"
         >
           {alternateEyes()}
         </div>

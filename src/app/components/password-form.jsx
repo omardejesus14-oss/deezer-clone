@@ -67,10 +67,10 @@ export default function RegisterPassword( {email}) {
       return;
     }
 
-    if (!metrics.hasLower && !metrics.hasUpper) {
-      setErrors(["poco segura"]);
-      return;
-    }
+   if (!metrics.hasLower || !metrics.hasUpper && !metrics.hasNumber) {
+  setErrors(["Contraseña poco segura"]);
+  return;
+}
 
     setErrors([]);
   }, [password, touched]);

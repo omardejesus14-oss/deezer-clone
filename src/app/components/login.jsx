@@ -3,7 +3,7 @@ import { createClient } from "../utils/supabase/client" ;
 import { useState } from "react";
 import NavBar from "./nagvar";
 import Link from "next/link";
-
+import Custom from "./custon";
 
 export default function LoginForm(){
 
@@ -11,9 +11,28 @@ export default function LoginForm(){
         email:"",
         password:""
     });
+    const [errors, setErrors] = useState({});
 
     const login = async ()=>{
-        console.log({email: user.email, password:  user.password});
+
+    let currentErrors = {
+        email:"",
+        password:""};
+
+    let hasErrorrs=false;
+
+    if(user.email===""){
+        currentErrors.email="El campo no puede estar vacío";
+        hasErrorrs=true;
+    }
+     if(user.password===""){
+      currentErrors.password="El campo no puede estar vacío";
+      hasErrorrs=true;
+    }
+
+    setErrors(currentErrors);
+
+    if(hasErrorrs) return;
 
         try {
 
@@ -50,7 +69,9 @@ export default function LoginForm(){
     </h2>
 
     <form 
-      onSubmit={(e) => { e.preventDefault(); login(); }} 
+      onSubmit={(e) => {
+         e.preventDefault();
+        login(); }} 
       className="w-full flex flex-col gap-4"
     >
      
@@ -59,11 +80,17 @@ export default function LoginForm(){
           Email
         </label>
         <input 
-          className="w-full bg-[#121216] border border-[#23232c] rounded-[8px] py-[5px] px-[16px] text-[16px] text-white focus:outline-none focus:border-[#a238ff] transition-all"
+          className="w-full bg-[#121216] border border-[#23232c] rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none focus:border-[#a238ff] transition-all"
           type="email"
           value={user.email}
           onChange={(e) => setUser({...user, email: e.target.value.trim()})} 
         />
+
+         {errors.email && (
+            <span className="flex gap-2 items-center text-red-500"> {errors.email}</span>
+          )
+
+          }
       </div>
 
       {/* Contenedor de Contraseña */}
@@ -71,26 +98,38 @@ export default function LoginForm(){
         <label className="text-[14px] font-semibold text-[#a2a2a2] ml-1">
           Contraseña
         </label>
-        <div className="relative">
-          <input 
-            className="w-full bg-[#121216] border border-[#23232c] rounded-[8px] py-[5px] px-[16px] text-[16px] text-white focus:outline-none focus:border-[#a238ff] transition-all"
+
+        <div className="flex flex-col items-center">
+            
+          <Custom
+         
             type="password"
             value={user.password}
-            onChange={(e) => setUser({...user, password: e.target.value.trim()})}
+             onchange={(value) => {setUser({...user, password: value});}}
+            secure
+            error={errors.password}
           />
-        
-          <span className="absolute right-4 top-2 text-gray-400 cursor-pointer text-sm">👁</span>
-        </div>
-      </div>
-
-      <p className=" absolute top-[335px] left-[560px] text-[14px] font-bold text-[#a2a2a2] self-end cursor-pointer hover:underline">
+          <p className="  text-[12px] font-bold text-[#a2a2a2] self-end cursor-pointer hover:underline">
         He olvidado mi contraseña?
       </p>
+        </div>
+     
+          {errors.password && (
+            <span className="flex gap-2 items-center text-red-500"> {errors.password}</span>
+          )
+
+          }
+        
+          
+       
+      </div>
+
+      
 
     
       <button 
         type="submit"
-        className="w-full bg-[#a238ff] hover:bg-[#8f20ff] text-white font-bold h-[38px] rounded-[8px] mt-4 transition-all text-[16px]"
+        className="w-full bg-[#a238ff] hover:bg-[#8f20ff] text-white font-bold h-[38px] rounded-[8px] mt-4 transition-all text-[16px] cursor-pointer"
       >
         Iniciar sesión
       </button>
