@@ -1,9 +1,16 @@
-// import Image from "next/image";
-// import NavBar from "./components/nagvar";
-// export default function Home() {
-//   return (
-//     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-//       <NavBar />
-//     </div>
-//   );
-// }
+import NavBar from "./components/nagvar";
+import Hero from "./components/hero";
+
+export default function Home(){
+    return(
+        <div>
+            <NavBar variant="full" />
+            <Hero />
+
+
+
+
+        </div>
+
+    )
+}

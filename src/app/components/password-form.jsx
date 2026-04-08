@@ -96,7 +96,7 @@ export default function RegisterPassword( {email}) {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center bg-[#000000] text-[#fff] font-sans">
+    <div className="w-full min-h-screen flex flex-col items-center p-6 bg-[#000000] text-[#fff] font-sans">
       <NavBar />
 
       <div className="mt-[96px] flex flex-col  w-full max-w-[410px]  ">

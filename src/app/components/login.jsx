@@ -68,7 +68,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center bg-[#000000] text-[#fff] font-sans">
+    <div className="w-full min-h-screen flex flex-col items-center bg-[#000000] p-6 text-[#fff] font-sans">
       <NavBar />
 
       <div className="mt-[80px] flex flex-col items-center w-full max-w-[410px] ">

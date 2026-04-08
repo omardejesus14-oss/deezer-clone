@@ -37,7 +37,7 @@ export default function RegisterEmail() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center bg-[#000000] text-[#fff] font-sans">
+    <div className="w-full min-h-screen flex flex-col items-center p-6 bg-[#000000] text-[#fff] font-sans">
       <NavBar />
 
       <div className="mt-[90px] flex flex-col items-center w-full max-w-[410px] ">
