@@ -9,7 +9,7 @@ export default function NavBar({ variant = "simple" }) {
 
   return (
     <nav
-      className={`w-full h-[64px] bg-[#000000] flex  absolute top-0 left-0 z-50 
+      className={`w-full h-[64px] bg-[#000f] flex  absolute top-0 left-0 z-50 
       ${
         variant === "full"
           ? "md:border-b md:border-white"
@@ -17,7 +17,7 @@ export default function NavBar({ variant = "simple" }) {
       }
       `}
     >
-      <div className="w-[93%] max-w-[1200px] mx-auto flex items-center justify-between px-0 md:px-6">
+      <div className="w-[89%] max-w-[1200px] mx-auto flex items-center justify-between px-0 md:px-6">
         
         {/* LOGO */}
         <Link href="/">
