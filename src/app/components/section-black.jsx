@@ -1,21 +1,72 @@
 "use client";
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
+import { GoArrowRight } from "react-icons/go";
 
 import { IoCheckmarkOutline } from "react-icons/io5";
 import Link from "next/link";
 
 export default function BlackWaveSection() {
 
+   const [activeCard, setActiveCard] = useState(null);
+  const [isHovering, setIsHovering] = useState(false);
+
   const [mousePos, setMousePos] = useState({ x: 0 });
+  const [mounted, setMounted] = useState(false);
+
+useEffect(() => {
+  setMounted(true);
+}, []);
 
   // Función para capturar el movimiento horizontal del mouse
   const handleMouseMove = (e) => {
     const { clientX } = e;
     // Calculamos la distancia horizontal al centro de la pantalla
-    // y dividimos por un valor alto (ej. 80) para un movimiento sutil
+   
     const x = (clientX - window.innerWidth / 2) / 80;
     setMousePos({ x });
   };
+
+
+  const sliderRef = useRef(null);
+
+const [isAtStart, setIsAtStart] = useState(true);
+const [isAtEnd, setIsAtEnd] = useState(false);
+
+const checkScroll = () => {
+  const el = sliderRef.current;
+
+  if (!el) return;
+
+ setIsAtStart(el.scrollLeft <= 5);
+  setIsAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 5);
+};
+
+
+const scrollLeft = () => {
+  const cardWidth = sliderRef.current.firstChild.offsetWidth + 20;
+  sliderRef.current.scrollBy({
+    left: -cardWidth,
+    behavior: "smooth",
+  });
+};
+
+const scrollRight = () => {
+  const cardWidth = sliderRef.current.firstChild.offsetWidth + 20;
+  sliderRef.current.scrollBy({
+    left: cardWidth,
+    behavior: "smooth",
+  });
+};
+
+useEffect(() => {
+  const el = sliderRef.current;
+  if (!el) return;
+
+  checkScroll();
+
+  el.addEventListener("scroll", checkScroll);
+  return () => el.removeEventListener("scroll", checkScroll);
+}, []);
 
 
 
@@ -152,12 +203,8 @@ export default function BlackWaveSection() {
     <div className="relative z-10 flex flex-col gap-8 items-center text-center px-6">
   
   <h2 className="
-    /* ESTILOS DE PC (Tus originales intactos) */
     md:text-[40px] md:leading-[0.9] md:tracking-[-0.07em] md:[transform:scaleY(1.3)]
-    
-    /* AJUSTE PARA MÓVIL (Escalado para que quepa en pantalla) */
     text-[32px] leading-[1] tracking-tight
-    
     font-[900] text-white
   ">
     ¿Buscas una canción?
@@ -180,66 +227,186 @@ export default function BlackWaveSection() {
 
 </div>
       </section>
+
+        {/* seccion 3 dela seccion black*/}
       
+ <section className="bg-[#080812] text-white py-20 flex flex-col gap-14 overflow-hidden">
 
-
-   <section className="bg-[#080812] text-white py-20 flex flex-col items-center ustify-cente">
-  {/* Título de sección con tu estilo personalizado */}
-  <h2 className="text-[32px] md:text-[40px] font-[900] leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)] text-center mb-16 uppercase italic">
+  <h2 className="
+    md:text-[40px] md:leading-[0.9] md:tracking-[-0.07em] md:[transform:scaleY(1.3)]
+    text-[32px] leading-[1] tracking-tight
+    font-[900] text-white px-6 md:px-29
+  ">
     Mucho más que un servicio <br /> de streaming de música
   </h2>
 
-  {/* Contenedor de Cards */}
-  <div className="grid grid-cols-1 md:grid-cols-3  max-w-[1100px] w-full px-6">
-    
-   
-    <div className="w-[78%] bg-[#080812]rounded-[24px] overflow-hidden flex flex-col h-[520px]">
-      
-        <h3 className="text-[15px] font-[900] absolute z-10 mt-15 ml-5 leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)]  text-center text-[#121212]">
-          Identifica las canciones que <br /> suenan a tu alrededor
-        </h3>
-      
-      <div className="flex-1 relative flex items-center justify-center">
-      
-        <div className="w-[85%] h-[90%] bg-gray-200/20 rounded-t-xl border-x border-t border-white/30 shadow-2xl">
-           <img src="/images/card-deezer3.webp" alt="" className="w-full h-full object-cover rounded-[10px]" />
-        </div>
-      </div>
+  <div 
+    className="relative"
+    onMouseEnter={() => setIsHovering(true)}
+    onMouseLeave={() => {
+      setIsHovering(false);
+      setActiveCard(null);
+    }}
+  >
+
+    {/* BOTONES SOLO EN MÓVIL */}
+    <div className="flex md:hidden gap-3 px-6">
+
+      <button
+        onClick={() => {
+          if (!isAtStart) scrollLeft();
+        }}
+        className={`
+          flex items-center justify-center
+          w-10 h-10 rounded-full border border-black
+          bg-white text-black
+          hover:bg-gray-200 transition
+          ${isAtStart ? "opacity-40 cursor-not-allowed" : ""}
+        `}
+      >
+        <GoArrowRight className="rotate-180" />
+      </button>
+
+      <button
+        onClick={() => {
+          if (!isAtEnd) scrollRight();
+        }}
+        className={`
+          flex items-center justify-center
+          w-10 h-10 rounded-full border border-black
+          bg-white text-black
+          hover:bg-gray-200 transition
+          ${isAtEnd ? "opacity-40 cursor-not-allowed" : ""}
+        `}
+      >
+        <GoArrowRight />
+      </button>
+
     </div>
 
-    {/* Card 2 - Tests de música */}
-    <div className="w-[78%] bg-[#080812] rounded-[24px] overflow-hidden flex flex-col h-[520px]">
-      
-        <h3 className="text-[15px] font-[900] absolute z-10 mt-15 ml-5 leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)]  text-center text-[#121212]">
+    {/* CARRUSEL */}
+    <div
+      ref={sliderRef}
+      className="
+        flex w-[100%] gap-5 md:gap-11
+        overflow-x-auto 
+        px-6 md:px-0 md:justify-center
+        scrollbar-hide
+      "
+    >
+
+      {/* CARD 1 */}
+      <div 
+        onMouseEnter={() => setActiveCard(0)}
+        className={`
+          min-w-[16%] w-[100%] md:w-[18%]
+          relative flex flex-col flex-shrink-0
+          transition-all duration-300
+          ${isHovering && activeCard !== 0 ? "opacity-40" : ""}
+        `}
+      >
+
+        <h3 className="absolute top-[32px] left-[20px] z-20 text-[15px] font-[900] leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)] text-center text-[#121212] pr-4">
+          Identifica las <br /> canciones que <br /> suenan a tu alrededor
+        </h3>
+
+        <div className="relative w-full h-full">
+          <img src="/images/card-deezer3.webp" className="w-full object-cover rounded-[10px]" />
+
+          {isHovering && (
+            <div className={`
+              absolute inset-0 rounded-[24px]
+              ${activeCard === 0 ? "bg-white/10" : "bg-white/20"}
+            `}/>
+          )}
+        </div>
+
+        {activeCard === 0 && (
+          <div className=" absolute mt-80 z-1000  w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
+            <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
+              Descubre letras
+            </button>
+          </div>
+        )}
+
+      </div>
+
+      {/* CARD 2 */}
+      <div 
+        onMouseEnter={() => setActiveCard(1)}
+        className={`
+          min-w-[16%] w-[100%] md:w-[18%]
+          relative flex flex-col flex-shrink-0
+          transition-all duration-300
+          ${isHovering && activeCard !== 1 ? "opacity-40" : ""}
+        `}
+      >
+
+        <h3 className="absolute top-[32px] left-[20px] z-20 text-[15px] font-[900] leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)] text-center text-[#121212] pr-4">
           Diviértete con nuestros <br /> tests de música
         </h3>
-      
-      <div className="flex-1 relative flex items-center justify-center">
-       
-        <div className="w-[85%] h-[90%] bg-gray-200/20 rounded-t-xl border-x border-t border-white/30 shadow-2xl">
-           <img src="/images/card-deezer2.webp" alt="" className="w-full h-full object-cover rounded-[12px]" />
-        </div>
-      </div>
-    </div>
 
-   
-    <div className=" w-[78%] bg-[#080812]rounded-[24px]  flex flex-col h-[520px]">
-     
-        <h3 className="text-[15px] font-[900] absolute z-10 mt-15 ml-5 leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)]  text-center text-[#121212]">
+        <div className="relative w-full h-full">
+          <img src="/images/card-deezer2.webp" className="w-full object-cover rounded-[10px]" />
+
+          {isHovering && (
+            <div className={`
+              absolute inset-0 rounded-[24px]
+              ${activeCard === 1 ? "bg-white/10" : "bg-white/20"}
+            `}/>
+          )}
+        </div>
+
+        {activeCard === 1 && (
+           <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
+            <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
+              Descubre letras
+            </button>
+          </div>
+        )}
+
+      </div>
+
+      {/* CARD 3 */}
+      <div 
+        onMouseEnter={() => setActiveCard(2)}
+        className={`
+          min-w-[16%] w-[100%] md:w-[18%]
+          relative flex flex-col flex-shrink-0
+          transition-all duration-300
+          ${isHovering && activeCard !== 2 ? "opacity-40" : ""}
+        `}
+      >
+
+        <h3 className="absolute top-[32px] left-[20px] z-20 text-[15px] font-[900] leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)] text-center text-[#121212] pr-4">
           Canta a pleno pulmón <br /> siguiendo las letras
         </h3>
-      
-      <div className="flex-1 relative flex items-center justify-center">
-     
-        <div className="w-[85%] h-[90%] bg-gray-200/20 rounded-t-xl border-x border-t border-white/30 shadow-2xl">
-           <img src="/images/card-deezer1.webp" alt="" className="w-full h-full object-cover rounded-[12px]" />
-        </div>
-      </div>
-    </div>
 
+        <div className="relative w-full h-full">
+          <img src="/images/card-deezer1.webp" className="w-full object-cover rounded-[10px]" />
+
+          {isHovering && (
+            <div className={`
+              absolute inset-0 rounded-[24px]
+              ${activeCard === 2 ? "bg-white/10" : "bg-white/20"}
+            `}/>
+          )}
+        </div>
+
+        {activeCard === 2 && (
+          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
+            <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
+              Descubre letras
+            </button>
+          </div>
+        )}
+
+      </div>
+
+    </div>
   </div>
 </section>
-
     </div>
   );
 }
+
