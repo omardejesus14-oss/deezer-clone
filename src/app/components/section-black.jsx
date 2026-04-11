@@ -1,7 +1,6 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { GoArrowRight } from "react-icons/go";
-
 import { IoCheckmarkOutline } from "react-icons/io5";
 import Link from "next/link";
 
@@ -13,12 +12,13 @@ export default function BlackWaveSection() {
   const [mousePos, setMousePos] = useState({ x: 0 });
   const [mounted, setMounted] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
   setMounted(true);
 }, []);
 
   // Función para capturar el movimiento horizontal del mouse
   const handleMouseMove = (e) => {
+  
     const { clientX } = e;
     // Calculamos la distancia horizontal al centro de la pantalla
    
@@ -38,24 +38,42 @@ const checkScroll = () => {
   if (!el) return;
 
  setIsAtStart(el.scrollLeft <= 5);
-  setIsAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 5);
+  setIsAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 3);
 };
 
-
-const scrollLeft = () => {
-  const cardWidth = sliderRef.current.firstChild.offsetWidth + 20;
-  sliderRef.current.scrollBy({
-    left: -cardWidth,
-    behavior: "smooth",
-  });
-};
 
 const scrollRight = () => {
-  const cardWidth = sliderRef.current.firstChild.offsetWidth + 20;
-  sliderRef.current.scrollBy({
-    left: cardWidth,
+  const el = sliderRef.current;
+  if (!el) return;
+
+  const card = el.children[0];
+  const gap = 20;
+
+  el.scrollBy({
+    left: card.offsetWidth + gap,
     behavior: "smooth",
   });
+
+  setTimeout(() => {
+    checkScroll(); 
+  }, 300);
+};
+
+const scrollLeft = () => {
+  const el = sliderRef.current;
+  if (!el) return;
+
+  const card = el.children[0];
+  const gap = 20;
+
+  el.scrollBy({
+    left: -(card.offsetWidth + gap),
+    behavior: "smooth",
+  });
+
+  setTimeout(() => {
+    checkScroll();
+  }, 300);
 };
 
 useEffect(() => {
@@ -69,33 +87,28 @@ useEffect(() => {
 }, []);
 
 
+if (!mounted) {
+    return <div className="bg-[#080812] min-h-screen" />; 
+  }
 
 
 
 
 
   return (
-    <div className="w-full bg-white">
-      {/* 1. Curva Superior (El "hachazo" blanco hacia el negro) */}
-      <div className="w-full overflow-hidden leading-[0]">
-        <svg
-          viewBox="0 0 1100 120"
-          preserveAspectRatio="none"
-          className="relative block w-full h-[60px] md:h-[100px]"
-        >
-        
-          <path
-            d="M0,0 C300,100 900,100 1400,0 L1200,0 L0,0 Z"
-            fill="#080812"
-            transform="rotate(180 600 60)"
-          ></path>
-        </svg>
-      </div>
-     
+    
+    <div 
+     className="w-full bg-[#080812] pt-[120px]"
+ style={{
+  clipPath: "polygon(0 50px, 10% 40px, 20% 30px, 30% 22px, 40% 18px, 50% 16px, 60% 18px, 70% 22px, 80% 30px, 90% 40px, 100% 50px, 100% 100%, 0% 100%)"
+}}
+
+ > 
+    
 
       {/* seccion 1 dela seccion black*/}
 
-      <section className="bg-[#080812] text-white py-10 flex flex-col items-center ">
+      <section className="h-full bg-[#080812] text-white py-1 md:py-10 flex flex-col items-center ">
         <div className="max-w-[800px] px-6 text-center mb-10 flex flex-col items-center gap-4">
           <h2 className="text-[48px] md:text-[40px] font-[900] leading-[0.9] tracking-[-0.07em] mb-12 [transform:scaleY(1.3)]">
             Elige la oferta que <br /> más se adapte a ti
@@ -147,7 +160,7 @@ useEffect(() => {
        
         {/* seccion 2 dela seccion black*/}
 
-      <section className="relative text-white w-full bg-[#080812] overflow-hidden flex flex-col items-center justify-center min-h-screen py-20"
+      <section className="h-full relative text-white w-full bg-[#080812] overflow-hidden flex flex-col items-center justify-center min-h-screen py-1 md:py-20"
       onMouseMove={handleMouseMove}>
      
        <div className="absolute inset-0 z-0 flex items-center justify-center opacity-70">
@@ -230,7 +243,7 @@ useEffect(() => {
 
         {/* seccion 3 dela seccion black*/}
       
- <section className="bg-[#080812] text-white py-20 flex flex-col gap-14 overflow-hidden">
+ <section className="h-full bg-[#080812] text-white py-10 md:py-20 flex flex-col gap-14 overflow-hidden">
 
   <h2 className="
     md:text-[40px] md:leading-[0.9] md:tracking-[-0.07em] md:[transform:scaleY(1.3)]
@@ -249,38 +262,50 @@ useEffect(() => {
     }}
   >
 
-    {/* BOTONES SOLO EN MÓVIL */}
+    {/* botones*/}
     <div className="flex md:hidden gap-3 px-6">
 
-      <button
-        onClick={() => {
-          if (!isAtStart) scrollLeft();
-        }}
-        className={`
-          flex items-center justify-center
-          w-10 h-10 rounded-full border border-black
-          bg-white text-black
-          hover:bg-gray-200 transition
-          ${isAtStart ? "opacity-40 cursor-not-allowed" : ""}
-        `}
-      >
-        <GoArrowRight className="rotate-180" />
-      </button>
+     {/* IZQUIERDA */}
+<button
 
-      <button
-        onClick={() => {
-          if (!isAtEnd) scrollRight();
-        }}
-        className={`
-          flex items-center justify-center
-          w-10 h-10 rounded-full border border-black
-          bg-white text-black
-          hover:bg-gray-200 transition
-          ${isAtEnd ? "opacity-40 cursor-not-allowed" : ""}
-        `}
-      >
-        <GoArrowRight />
-      </button>
+  onClick={() => {
+      console.log("LEFT CLICK", { isAtStart });
+    if (!isAtStart) scrollLeft();
+  }}
+  className={`
+    flex items-center justify-center
+    w-10 h-10 rounded-full border border-black
+    bg-white text-black
+    transition
+
+    ${isAtStart
+      ? "opacity-40 cursor-not-allowed hover:bg-white"
+      : "hover:bg-gray-200"}
+  `}
+>
+  <GoArrowRight className="rotate-180" />
+</button>
+
+{/* DERECHA */}
+<button
+ 
+  onClick={() => {
+    console.log("RIGHT CLICK", { isAtEnd })
+    if (!isAtEnd) scrollRight();
+  }}
+  className={`
+    flex items-center justify-center
+    w-10 h-10 rounded-full border border-black
+    bg-white text-black
+    transition
+
+    ${isAtEnd
+      ? "opacity-40 cursor-not-allowed hover:bg-white"
+      : "hover:bg-gray-200"}
+  `}
+>
+  <GoArrowRight />
+</button>
 
     </div>
 
@@ -313,18 +338,13 @@ useEffect(() => {
         <div className="relative w-full h-full">
           <img src="/images/card-deezer3.webp" className="w-full object-cover rounded-[10px]" />
 
-          {isHovering && (
-            <div className={`
-              absolute inset-0 rounded-[24px]
-              ${activeCard === 0 ? "bg-white/10" : "bg-white/20"}
-            `}/>
-          )}
+          
         </div>
 
         {activeCard === 0 && (
-          <div className=" absolute mt-80 z-1000  w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
+          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
             <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
-              Descubre letras
+              Descubre SongCatcher
             </button>
           </div>
         )}
@@ -349,18 +369,13 @@ useEffect(() => {
         <div className="relative w-full h-full">
           <img src="/images/card-deezer2.webp" className="w-full object-cover rounded-[10px]" />
 
-          {isHovering && (
-            <div className={`
-              absolute inset-0 rounded-[24px]
-              ${activeCard === 1 ? "bg-white/10" : "bg-white/20"}
-            `}/>
-          )}
+         
         </div>
 
         {activeCard === 1 && (
            <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
             <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
-              Descubre letras
+              Descubre Los tests de musica
             </button>
           </div>
         )}
@@ -385,12 +400,7 @@ useEffect(() => {
         <div className="relative w-full h-full">
           <img src="/images/card-deezer1.webp" className="w-full object-cover rounded-[10px]" />
 
-          {isHovering && (
-            <div className={`
-              absolute inset-0 rounded-[24px]
-              ${activeCard === 2 ? "bg-white/10" : "bg-white/20"}
-            `}/>
-          )}
+         
         </div>
 
         {activeCard === 2 && (
