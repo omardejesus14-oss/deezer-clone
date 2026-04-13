@@ -98,7 +98,7 @@ if (!mounted) {
   return (
     
     <div 
-     className="w-full bg-[#080812] pt-[120px] "
+     className="w-full bg-[#080812] pt-[120px] pb-[100px]  "
  style={{
   clipPath: "polygon(0 50px, 10% 40px, 20% 30px, 30% 22px, 40% 18px, 50% 16px, 60% 18px, 70% 22px, 80% 30px, 90% 40px, 100% 50px, 100% 100%, 0% 100%)"
 }}
@@ -341,13 +341,15 @@ if (!mounted) {
           
         </div>
 
-        {activeCard === 0 && (
-          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[240px]">
-            <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
-              Descubre SongCatcher
-            </button>
-          </div>
-        )}
+       <div className={`
+  w-[300px] flex py-3 rounded-[10px] md:w-[240px]
+  transition-all duration-300
+  ${activeCard === 0 ? "opacity-100" : "opacity-0"}
+`}>
+  <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
+    Descubre SongCatcher
+  </button>
+</div>
 
       </div>
 
@@ -372,14 +374,15 @@ if (!mounted) {
          
         </div>
 
-        {activeCard === 1 && (
-           <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[240px]">
-            <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
-              Descubre Los tests de musica
-            </button>
-          </div>
-        )}
-
+           <div className={`
+  w-[300px] flex py-3 rounded-[10px] md:w-[240px]
+  transition-all duration-300
+  ${activeCard === 1 ? "opacity-100" : "opacity-0"}
+`}>
+  <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
+    Descubre los tests de musica
+  </button>
+</div>
       </div>
 
       {/* CARD 3 */}
@@ -403,13 +406,15 @@ if (!mounted) {
          
         </div>
 
-        {activeCard === 2 && (
-          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[240px]">
-            <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
-              Descubre letras
-            </button>
-          </div>
-        )}
+           <div className={`
+  w-[300px] flex py-3 rounded-[10px] md:w-[240px]
+  transition-all duration-300
+  ${activeCard === 2 ? "opacity-100" : "opacity-0"}
+`}>
+  <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
+    Descubre las letras  
+  </button>
+</div>
 
       </div>
 
