@@ -98,7 +98,7 @@ if (!mounted) {
   return (
     
     <div 
-     className="w-full bg-[#080812] pt-[120px]"
+     className="w-full bg-[#080812] pt-[120px] "
  style={{
   clipPath: "polygon(0 50px, 10% 40px, 20% 30px, 30% 22px, 40% 18px, 50% 16px, 60% 18px, 70% 22px, 80% 30px, 90% 40px, 100% 50px, 100% 100%, 0% 100%)"
 }}
@@ -108,25 +108,25 @@ if (!mounted) {
 
       {/* seccion 1 dela seccion black*/}
 
-      <section className="h-full bg-[#080812] text-white py-1 md:py-10 flex flex-col items-center ">
-        <div className="max-w-[800px] px-6 text-center mb-10 flex flex-col items-center gap-4">
-          <h2 className="text-[48px] md:text-[40px] font-[900] leading-[0.9] tracking-[-0.07em] mb-12 [transform:scaleY(1.3)]">
+      <section className=" w-full bg-[#080812] text-white py-1 md:py-10 flex flex-col items-center ">
+        <div className=" w-full px-2 text-center  flex flex-col items-center gap-4">
+          <h2 className="w-[330px] md:w-full text-[35px] md:text-[52px] font-[900] leading-[0.9] tracking-[-0.07em] mb-12 [transform:scaleY(1.3)]">
             Elige la oferta que <br /> más se adapte a ti
           </h2>
 
           {/* Tarjeta Blanca Premium */}
-          <div className="bg-white rounded-[10px] p-4 text-black inline-block w-full max-w-[280px] shadow-xl">
-            <span className="bg-[#a238ff] text-white text-[16px] font-bold px-3 py-1 rounded-[6px] uppercase leading-[0.9] tracking-[-0.07em] mb-12 [transform:scaleY(1.3)]">
+          <div className="bg-white rounded-[10px] md:px-6 px-6 py-13 text-black inline-block w-full md:w-full max-w-[350px] shadow-xl">
+            <span className="bg-[#a238ff] text-white text-[22px] font-bold px-3 py-1 rounded-[8px] uppercase leading-[0.9] tracking-[-0.07em] [transform:scaleY(1.3)]">
               Premium
             </span>
-            <h3 className="text-[30px] font-[900] mt-6 leading-[0.9] tracking-[-0.07em] mb-2 [transform:scaleY(1.3)]">
+            <h3 className="text-[40px] font-[900] mt-6 leading-[0.9] tracking-[-0.07em] mb-2 [transform:scaleY(1.3)]">
               1 MES GRATIS
             </h3>
             <p className="text-gray-500 text-sm mt-2 mb-8">
               luego, Col$19.500/mes
             </p>
-            <Link href="/email">
-              <button className="bg-[#a238ff] text-white w-full py-1 cursor-pointer rounded-[10px] font-bold hover:bg-[#8b2be2] transition-colors">
+            <Link href="/email" className="">
+              <button className="bg-[#a238ff] text-white w-full  py-2 cursor-pointer rounded-[10px] font-bold hover:bg-[#8b2be2] transition-colors">
                 Pruébalo gratis
               </button>
             </Link>
@@ -148,8 +148,8 @@ if (!mounted) {
               </li>
             </ul>
           </div>
-          <div className=" w-full max-w-[280px] mt-8  text-center flex flex-col gap-1 text-sm font-medium bg-white p-2 rounded-md">
-            <p className="text-sm font-medium text-[#112]">
+          <div className=" w-full max-w-[350px] mt-8   text-center flex flex-col gap-1 text-sm font-medium bg-white p-2 rounded-[15px]">
+            <p className="text-sm font-medium text-[#112] py-1">
               Descubre todas nuestras ofertas
             </p>
           </div>
@@ -160,10 +160,11 @@ if (!mounted) {
        
         {/* seccion 2 dela seccion black*/}
 
-      <section className="h-full relative text-white w-full bg-[#080812] overflow-hidden flex flex-col items-center justify-center min-h-screen py-1 md:py-20"
+      <section className="relative text-white w-full h-auto bg-[#080812] overflow-hidden flex flex-col items-center justify-center min-h-0 md:min-h-screen py-20  md:py-20"
       onMouseMove={handleMouseMove}>
-     
-       <div className="absolute inset-0 z-0 flex items-center justify-center opacity-70">
+
+       
+      <div className="absolute inset-0 z-0 flex justify-center  opacity-70">
         <svg
           viewBox="0 0 1300 500"
           className="w-full max-w-[1200px]"
@@ -213,41 +214,40 @@ if (!mounted) {
         
         </div>
      
-    <div className="relative z-10 flex flex-col gap-8 items-center text-center px-6">
+    <div className="relative z-10 flex flex-col gap-10 mt-17 items-center text-center justify-center px-6">
   
-  <h2 className="
-    md:text-[40px] md:leading-[0.9] md:tracking-[-0.07em] md:[transform:scaleY(1.3)]
-    text-[32px] leading-[1] tracking-tight
+  <h2 className="w-[330px] md:w-full
+    md:text-[49px] md:leading-[0.9] md:tracking-[-0.07em] md:[transform:scaleY(1.4)]
+    text-[36px] leading-[1] tracking-tight
     font-[900] text-white
   ">
     ¿Buscas una canción?
     <br />
     ¡La encontrarás en Deezer con un
-    <br /> sonido de alta calidad! 
+    <br />sonido de alta calidad! 
   </h2>
 
   <button className="
-    /* ESTILOS DE PC (Tus originales) */
-    md:px-2 md:py-1 md:rounded-[10px] md:font-bold md:text-[16px]
-    
-    /* AJUSTE PARA MÓVIL (Un poco más de área táctil) */
-    px-6 py-3 rounded-full text-[14px]
-    
-    bg-white mt-2 text-black font-bold
+    md:px-6 md:py-2 rounded-[10px] md:font-bold md:text-[16px]
+    px-6 py-2  text-[16px]
+     bg-white  text-black font-bold
   ">
     Explora nuestro catálogo 
   </button>
 
 </div>
+
+      
+  
       </section>
 
         {/* seccion 3 dela seccion black*/}
       
- <section className="h-full bg-[#080812] text-white py-10 md:py-20 flex flex-col gap-14 overflow-hidden">
+ <section className=" bg-[#080812] text-white py-10 md:py-20 flex flex-col gap-14 overflow-hidden">
 
   <h2 className="
-    md:text-[40px] md:leading-[0.9] md:tracking-[-0.07em] md:[transform:scaleY(1.3)]
-    text-[32px] leading-[1] tracking-tight
+    md:text-[45px] md:leading-[0.9] md:tracking-[-0.03em] md:[transform:scaleY(1.6)] leading-[0.0]tracking-[-0.00em] [transform:scaleY(1.2)]
+    text-[38px] leading-[1] tracking-tight
     font-[900] text-white px-6 md:px-29
   ">
     Mucho más que un servicio <br /> de streaming de música
@@ -263,7 +263,7 @@ if (!mounted) {
   >
 
     {/* botones*/}
-    <div className="flex md:hidden gap-3 px-6">
+    <div className="flex md:hidden gap-3 px-6 pb-4">
 
      {/* IZQUIERDA */}
 <button
@@ -342,7 +342,7 @@ if (!mounted) {
         </div>
 
         {activeCard === 0 && (
-          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
+          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[240px]">
             <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
               Descubre SongCatcher
             </button>
@@ -373,7 +373,7 @@ if (!mounted) {
         </div>
 
         {activeCard === 1 && (
-           <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
+           <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[240px]">
             <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
               Descubre Los tests de musica
             </button>
@@ -404,7 +404,7 @@ if (!mounted) {
         </div>
 
         {activeCard === 2 && (
-          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[200px]">
+          <div className=" w-[300px] flex  py-3 rounded-[10px] md:w-[240px]">
             <button className="w-full bg-white text-black text-[12px] px-4 py-3 md:py-2 rounded-[10px] font-bold">
               Descubre letras
             </button>
