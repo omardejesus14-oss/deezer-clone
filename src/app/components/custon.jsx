@@ -28,7 +28,7 @@ export default function Custom({
 
   return (
     <div
-      className={`w-full flex bg-[#121216] border rounded-[8px] h-[38px] px-[16px] text-white transition-all
+      className={`w-full flex bg-[#121216] border rounded-[8px] h-[48px] px-[16px] text-white transition-all hover:bg-[#444]
         ${
           error
             ? "border-red-500 focus-within:border-red-500"

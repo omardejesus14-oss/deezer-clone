@@ -6,11 +6,11 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="w-full min-h-[90vh] flex flex-col items-center justify-center bg-white pt-53 pb-12 px-4">
+    <section className="w-full min-h-[90vh] flex flex-col items-center justify-center bg-white pt-66 pb-12 px-4">
       
       {/* el texto gigante ahora derecho y mas grueso */}
       <div className="max-w-[1000px] text-center mb-8">
-        <h1 className="text-[58px]  md:text-[100px] font-[1000]   text-[#001f] uppercase  leading-[0.8] tracking-[-0.06em] [transform:scaleY(1.2)] ">
+        <h1 className="text-[58px]  md:text-[130px] font-[1000]   text-[#001f] uppercase  leading-[0.8] tracking-[-0.06em] [transform:scaleY(1.2)] ">
           Donde la <br />
           música <br />
           cobra vida
@@ -18,7 +18,7 @@ export default function Hero() {
       </div>
 
     
-      <p className="text-[20px] md:text-[24px] font-[900] text-[#001] mb-6 text-center   leading-[0.8] tracking-[-0.06em] [transform:scaleY(1.4)]">
+      <p className="text-[20px] md:text-[32px] font-[900] text-[#001] mb-6 text-center   leading-[0.8] tracking-[-0.06em] [transform:scaleY(1.4)]">
         Música en streaming con Deezer
       </p>
 

@@ -131,10 +131,10 @@ const handleSignUp = async () => {
   return(
 <div className="min-h-screen bg-black text-white flex flex-col items-center p-6 font-sans">
     <NavBar />
-  <div className="w-full max-w-[410px]  mt-[71px]">
-    <div className="text-gray-400 text-sm mb-4 flex items-center gap-2">
+  <div className="w-full max-w-[510px]  mt-[71px]">
+    <div className="text-gray-400 text-[16px] mb-4 flex items-center gap-2">
       <Link href="/password"> &lt;</Link> 
-      <span className="text-[10px]
+      <span className="text-[16px]
       "> Paso 3 de 3</span>
     </div>
 
@@ -150,9 +150,9 @@ const handleSignUp = async () => {
       
       {/* Input de Nombre de Usuario */}
       <div className="flex flex-col gap-2 text-[10px]">
-        <label className="text-[10px] text-gray-400 font-medium">Nombre de usuario</label>
+        <label className="text-[16px] text-gray-400 font-medium">Nombre de usuario</label>
         <input
-            className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none transition-all
+            className={`w-full bg-[#23232d] border rounded-[8px] h-[48px] px-[16px] text-[16px] text-white focus:outline-none transition-all
                   ${
                     errors.username
                       ? "border-red-500 focus:border-red-500"
@@ -176,7 +176,7 @@ const handleSignUp = async () => {
 
       {/* Input de Edad */}
    <div className="flex flex-col gap-2">
-  <label className="text-[10px] text-gray-400 font-medium">Edad</label>
+  <label className="text-[16px] text-gray-400 font-medium">Edad</label>
   <div className="relative w-full ">
     <input
       type="number"
@@ -185,7 +185,7 @@ const handleSignUp = async () => {
       placeholder=""
       suppressHydrationWarning={true}
     
-      className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all
+      className={`w-full bg-[#23232d] border rounded-[8px] h-[48px] px-[16px] text-[16px] text-white focus:outline-none appearance-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none transition-all
                   ${
                     errors.age
                       ? "border-red-500 focus:border-red-500"
@@ -223,14 +223,14 @@ const handleSignUp = async () => {
 
       {/* Selector de Identidad */}
      <div className="flex flex-col gap-2 ">
-  <label className="text-[10px] text-gray-400 font-medium">Identidad</label>
+  <label className="text-[16px] text-gray-400 font-medium">Identidad</label>
   <div className="relative w-full">
     <select
       value={gender}
       onChange={(e) => setGender(e.target.value)}
       suppressHydrationWarning={true}
 
-      className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none appearance-none cursor-pointer  transition-all text-white flex items-center
+      className={`w-full bg-[#23232d] border rounded-[8px] h-[48px] px-[16px] text-[16px] text-white focus:outline-none appearance-none cursor-pointer  transition-all text-white flex items-center
                   ${
                     errors.username
                       ? "border-red-500 focus:border-red-500"
@@ -260,13 +260,13 @@ const handleSignUp = async () => {
 
 
        <div className="w-full text-center "> 
-          <p className="text-[11px] text-gray-500 " >
+          <p className="text-[13px] text-gray-500 " >
         Al hacer clic en "Regístrate gratis", aceptas crear una cuenta y aceptas las{" "}
         <Link href="/terms" className=" <text-[10px] underline cursor-pointer hover:text-[#b35cff]">
           Condiciones generales de uso
         </Link>
         y la{" "}
-        <Link href="/privacy"  className=" text-[10px] underline cursor-pointer hover:text-[#b35cff]">
+        <Link href="/privacy"  className=" text-[13px] underline cursor-pointer hover:text-[#b35cff]">
           Política de privacidad
         </Link>
         .
@@ -276,7 +276,7 @@ const handleSignUp = async () => {
 
       {/* Botón Final */}
       <button   type="submit"
-        className="bg-[#a238ff] text-[14px] hover:bg-[#b35cff] text-white font-bold py-2 rounded-[10px] transition-colors  text-center w-full mt-4">
+        className="bg-[#a238ff] text-[16px] hover:bg-[#b35cff] text-white font-bold h-[48px] rounded-[10px] transition-colors  text-center w-full mt-4">
       
       
         Regístrate gratis

@@ -99,7 +99,7 @@ export default function RegisterPassword( {email}) {
     <div className="w-full min-h-screen flex flex-col items-center p-6 bg-[#000000] text-[#fff] font-sans">
       <NavBar />
 
-      <div className="mt-[96px] flex flex-col  w-full max-w-[410px]  ">
+      <div className="mt-[96px] flex flex-col  w-full max-w-[510px]  ">
         <div className="text-[11px] mb-3 flex items-center ">
           <Link className="flex gap-1 items-center text-gray-400" href="/email"> <GoChevronLeft size={22} /> Paso 2 de 3</Link>
          
@@ -195,7 +195,7 @@ export default function RegisterPassword( {email}) {
            <button
             disabled={isDisabled}
             type="submit"
-            className={`text-center w-full h-[38px] rounded-[8px] transition-all ${
+            className={`text-center w-full h-[48px] rounded-[8px] transition-all hover:bg-[#a269ff] ${
               isDisabled
       ? "bg-[#2a2a33] text-gray-400"
       : "bg-[#a238ff] text-white"

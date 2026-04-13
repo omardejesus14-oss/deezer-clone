@@ -71,7 +71,7 @@ export default function LoginForm() {
     <div className="w-full min-h-screen flex flex-col items-center bg-[#000000] p-6 text-[#fff] font-sans">
       <NavBar />
 
-      <div className="mt-[80px] flex flex-col items-center w-full max-w-[410px] ">
+      <div className="mt-[80px] flex flex-col items-center w-full max-w-[510px] ">
         <h2 className="text-[50px] font-[900] leading-[0.8] tracking-[-0.05em] text-white [transform:scaleY(1.3)] origin-top mb-16">
           Conectarse
         </h2>
@@ -84,11 +84,11 @@ export default function LoginForm() {
           className="w-full flex flex-col gap-4"
         >
           <div className="flex flex-col gap-2">
-            <label className="text-[11px] font-semibold text-[#a2a2a2] ml-1">
+            <label className="text-[16px] font-semibold text-[#a2a2a2] ml-1">
               Email
             </label>
             <input
-              className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none transition-all
+              className={`w-full bg-[#23232d] border rounded-[8px] h-[48px] px-[16px] text-[16px] text-white focus:outline-none transition-all
                   ${
                     errors.email
                       ? "border-red-500 focus:border-red-500"
@@ -103,7 +103,7 @@ export default function LoginForm() {
             />
 
             {errors.email && (
-              <span className="flex gap-2 items-center text-red-500 text-[10px]">
+              <span className="flex gap-2 items-center text-red-500 text-[13px]">
                 <GoStop size={13} />
                 {errors.email}
               </span>
@@ -132,7 +132,7 @@ export default function LoginForm() {
             </div>
 
             {errors.password && (
-              <span className="flex gap-2 items-center text-red-500 text-[10px]">
+              <span className="flex gap-2 items-center text-red-500 text-[13px]">
                 {" "}
                 <GoStop size={13} />
                 {errors.password}
@@ -142,7 +142,7 @@ export default function LoginForm() {
 
           <button
             type="submit"
-            className="w-full bg-[#a238ff] hover:bg-[#8f20ff] text-white font-bold h-[38px] rounded-[8px] mt-4 transition-all text-[16px] cursor-pointer"
+            className="w-full bg-[#a238ff] hover:bg-[#8f20ff] text-white font-bold h-[48px] rounded-[8px] mt-4 transition-all text-[16px] cursor-pointer"
           >
             Iniciar sesión
           </button>

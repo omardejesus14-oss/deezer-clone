@@ -40,7 +40,7 @@ export default function RegisterEmail() {
     <div className="w-full min-h-screen flex flex-col items-center p-6 bg-[#000000] text-[#fff] font-sans">
       <NavBar />
 
-      <div className="mt-[90px] flex flex-col items-center w-full max-w-[410px] ">
+      <div className="mt-[90px] flex flex-col items-center w-full max-w-[510px] ">
         <h2 className="text-[32px] font-[900] leading-[0.8] tracking-[-0.05em] text-white [transform:scaleY(1.3)] origin-top mb-16">
           Introduce tu dirección de email
         </h2>
@@ -58,7 +58,7 @@ export default function RegisterEmail() {
             </label>
             <input
               onBlur={() => setTouched(true)}
-              className={`w-full bg-[#23232d] border rounded-[8px] h-[38px] px-[16px] text-[13px] text-white focus:outline-none transition-all
+              className={`w-full bg-[#23232d] border rounded-[8px] h-[48px] px-[16px] text-[16px] text-white focus:outline-none transition-all hover:bg-[#444]
                   ${
                     errors
                       ? "border-red-500 focus:border-red-500"
@@ -83,7 +83,7 @@ export default function RegisterEmail() {
           <button
             disabled={isDisabled}
             type="submit"
-            className={`text-center w-full h-[38px] rounded-[8px] transition-all ${
+            className={`text-center text-[16px] w-full h-[48px] hover:bg-[#a269ff] rounded-[8px] transition-all ${
               isDisabled
                 ? "bg-[#2a2a33] text-gray-400"
                 : "bg-[#a238ff] text-white"
@@ -94,7 +94,7 @@ export default function RegisterEmail() {
 
           <Link
             href="/password"
-            className="text-[16px] hover:bg-[#444] text-white font-bold h-[38px] rounded-[8px] mt-4 transition-all text-[16px] text-center  flex items-center justify-center w-full"
+            className="text-[16px] hover:bg-[#444] text-white font-bold h-[48px] rounded-[8px] mt-4 transition-all text-[16px] text-center  flex items-center justify-center w-full"
           >
             <span>Iniciar sesión con el número de teléfono</span>
           </Link>
