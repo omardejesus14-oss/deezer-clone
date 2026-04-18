@@ -11,32 +11,15 @@ export default function SectionWhite() {
   const frase = "de 10 millones de amantes de la musica";
 
   return (
-    <section className="relative w-full bg-white   pt-[120px]  text-black overflow-hidden "
-//   style={{
-//   clipPath: "polygon(0 100%, 0 20px, 10% 40px, 20% 60px, 30% 80px, 40% 95px, 50% 110px, 60% 95px, 70% 80px, 80% 60px, 90% 40px, 100% 20px, 100% 100%)"
-// }}
-    
-    >
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
-  <svg
-    viewBox="0 0 1440 120"
-    preserveAspectRatio="none"
-    className="block w-full h-[80px]"
-  >
-    <path
-      d="M0,0 C360,120 1080,120 1440,0 L1440,0 L0,0 Z"
-      fill="white"
-    />
-  </svg>
-</div>
-      
+    <section className="relative w-full bg-white     text-black overflow-hidden "
 
-      
+    >
+
 
       {/* 2. SECCIÓN DE ROSTROS */}
       <div className="flex flex-col items-center pt-32 pb-12 text-center">
       
-        <h2 className="text-[35px] md:text-[55px] font-black leading-[0.8] tracking-[-0.10em] [transform:scaleY(1.3)] inline-block mb-14 ">
+        <h2 className="text-[35px] md:text-[50px] font-black leading-[0.8] tracking-[-0.10em] [transform:scaleY(1.3)] inline-block mb-14 ">
           El corazón de la música <br /> que late en todo el mundo
         </h2>
 
@@ -80,6 +63,54 @@ export default function SectionWhite() {
           ))}
         </motion.div>
       </div>
+
+
+
+      <div className="w-full bg-white relative overflow-hidden ">
+
+  {/* IMAGEN DE ARRIBA */}
+  <div className="w-full flex justify-center overflow-hidden pt-10 md:pt-20">
+    <img
+      src="https://cdn-images.dzcdn.net/images/misc/599ef65d99e9aaa5923c0f4c5b397566/0x1900-000000-80-0-0.png"
+      alt="deezer banner"
+      className=" object-cover
+      w-[180%]       
+      max-w-none
+      md:w-[60%]"
+    />
+  </div>
+
+  {/* 🔥 CURVA ABAJO DE LA IMAGEN */}
+  <div
+    className="absolute bottom-[55%] left-0 w-full h-[100px]"
+    
+  />
+
+  {/* 🔥 CONTENIDO */}
+  <div className="relative z-10 flex flex-col items-center text-center px-6 py-16 gap-6">
+
+    <h2 className="text-[35px] md:text-[50px] font-black leading-[0.8] tracking-[-0.10em] [transform:scaleY(1.3)] inline-block mb-7 ">
+      Transfiere toda tu <br /> biblioteca de música a <br /> Deezer con solo unos clics
+    </h2>
+
+    <p className="text-[#000000] text-sm md:text-[15px] max-w-[600px]">
+      ¡Al pasarte a Deezer, no perderás tus playlists ni favoritos, lo prometemos!
+    </p>
+
+    {/* BOTONES */}
+    <div className="flex flex-col  gap-4 mt-2 justify-center">
+      <button className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-2 rounded-[10px] font-bold">
+        Pruébalo gratis
+      </button>
+
+      <button className="bg-black text-white px-6 py-2 rounded-[10px] font-bold">
+        Transferir mi música
+      </button>
+    </div>
+
+  </div>
+
+</div>
 
     </section>
   );

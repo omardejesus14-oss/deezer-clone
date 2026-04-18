@@ -98,15 +98,18 @@ if (!mounted) {
   return (
     
     <div 
-     className="w-full bg-[#080812] pt-[120px] pb-[100px]  "
- style={{
-  clipPath: "polygon(0 50px, 10% 40px, 20% 30px, 30% 22px, 40% 18px, 50% 16px, 60% 18px, 70% 22px, 80% 30px, 90% 40px, 100% 50px, 100% 100%, 0% 100%)"
-}}
+     className="relative w-full bg-[#080812] pt-[120px] pb-[100px]  "
+  style={{
+    clipPath: window.innerWidth < 768
+      ? "polygon(0 30px, 10% 25px, 20% 20px, 30% 16px, 40% 14px, 50% 13px, 60% 14px, 70% 16px, 80% 20px, 90% 25px, 100% 30px, 100% 100%, 0% 100%)"
+      : "polygon(0 50px, 10% 40px, 20% 30px, 30% 22px, 40% 18px, 50% 16px, 60% 18px, 70% 22px, 80% 30px, 90% 40px, 100% 50px, 100% 100%, 0% 100%)"
+  }}
 
  > 
-    
 
-      {/* seccion 1 dela seccion black*/}
+
+
+     {/* seccion 1 dela seccion black*/}
 
       <section className=" w-full bg-[#080812] text-white py-1 md:py-10 flex flex-col items-center ">
         <div className=" w-full px-2 text-center  flex flex-col items-center gap-4">
@@ -318,6 +321,10 @@ if (!mounted) {
         px-6 md:px-0 md:justify-center
         scrollbar-hide
       "
+      style={{
+    scrollbarWidth: "none",
+    msOverflowStyle: "none"
+  }}
     >
 
       {/* CARD 1 */}
@@ -421,6 +428,21 @@ if (!mounted) {
     </div>
   </div>
 </section>
+
+ <div
+ className="absolute bottom-0 left-0 w-full h-[80px] bg-white"
+   style={{
+    clipPath: window.innerWidth < 768
+      ? "polygon(0 30px, 10% 25px, 20% 20px, 30% 16px, 40% 14px, 50% 13px, 60% 14px, 70% 16px, 80% 20px, 90% 25px, 100% 30px, 100% 100%, 0% 100%)"
+      : "polygon(0 50px, 10% 40px, 20% 30px, 30% 22px, 40% 18px, 50% 16px, 60% 18px, 70% 22px, 80% 30px, 90% 40px, 100% 50px, 100% 100%, 0% 100%)"
+  }}
+ >
+
+ </div>
+    
+
+  
+
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function NavBar({ variant = "simple" }) {
 
   return (
     <nav
-      className={`w-full h-[64px] md:h-[84px] bg-[#000f] flex  absolute top-0 left-0 z-50 
+      className={`w-full h-[64px] md:h-[78px] bg-[#000f] flex  absolute top-0 left-0 z-50 
       ${
         variant === "full"
           ? "md:border-b md:border-white"
