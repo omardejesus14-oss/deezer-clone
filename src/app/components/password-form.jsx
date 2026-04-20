@@ -3,19 +3,22 @@
 import { useState, useEffect } from "react";
 import NavBar from "./nagvar";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter , useSearchParams } from "next/navigation";
 import Custom from "./custon";
 import { GoIssueClosed, GoStop } from "react-icons/go";
 import { GoChevronLeft } from "react-icons/go";
 
-export default function RegisterPassword( {email}) {
+export default function RegisterPassword( ) {
   const [errors, setErrors] = useState([]);
   const [strength, setStrength] = useState("");
   const [password, setPassword] = useState("");
   const [touched, setTouched] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [dirty, setDirty] = useState(false);
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const email = searchParams.get("email");
 
   useEffect(() => {
     setMounted(true);
@@ -83,9 +86,10 @@ export default function RegisterPassword( {email}) {
 
   const handleNext = () => {
     // Pasamos el email a la siguiente página por la URL
-    router.push(
+   router.push(
       `/register?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,
     );
+
   };
 
   const strengthColors = {

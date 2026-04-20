@@ -10,15 +10,15 @@
 //         </div>
 //     )
 // }
-import { Suspense } from "react";
+
 import RegisterPassword from "../components/password-form";
 
 
-export default function Page({searchParams}) {
+export default function Page() {
 
   return (
-    <Suspense fallback={null}>
-      <RegisterPassword email={searchParams.email || ""} />
-    </Suspense>
+    
+      <RegisterPassword/>
+ 
   );
 }

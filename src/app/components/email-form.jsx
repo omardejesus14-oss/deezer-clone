@@ -31,7 +31,7 @@ export default function RegisterEmail() {
   const handleNext = () => {
     setTouched(true);
 
-    if (!isValid) return;
+      if (!isValid) return;
     // Pasamos el email a la siguiente página por la URL
     router.push(`/password?email=${encodeURIComponent(email)}`);
   };

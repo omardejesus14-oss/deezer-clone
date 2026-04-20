@@ -2,22 +2,28 @@
 
 "use client"
 import { createClient } from "../utils/supabase/client" ;  
-import { useState } from "react";
+import { useState, useEffect  } from "react";
 import NavBar from "./nagvar";
 import Link from "next/link";
-import { useSearchParams, useRouter } from "next/navigation"; 
+import { useSearchParams, useRouter , } from "next/navigation"; 
 import {SlArrowUp , SlArrowDown } from "react-icons/sl";
 import { GoStop } from "react-icons/go";
+import { Suspense } from 'react';
+ 
 
 
 
 export default function Register () {
 
   // Manejo de estados individuales
+
 const [username, setUsername] = useState("");
 const [age, setAge] = useState("");
 const [gender, setGender] = useState(""); // Identidad
 const [errors, setErrors] = useState({username: "", age:  "", gender: ""});
+
+
+
 
 
 // Hook para obtener datos de la URL de los pasos anteriores
@@ -25,6 +31,8 @@ const router = useRouter();
 const searchParams = useSearchParams();
 const email = searchParams.get("email");
 const password = searchParams.get("password");
+
+console.log("Params detectados:", { email, password });
 
 // handleAgeChange: Funciones para aumentar y disminuir
 const incrementarEdad = () => {
@@ -45,6 +53,11 @@ const supabase = createClient();
 
 // handleSignUp: Función principal de envío
 const handleSignUp = async () => { 
+  if (!email || !password) {
+    console.error("No hay datos en el estado:", { email, password });
+    alert("Error: Faltan los datos de acceso.");
+    return;
+  }
   
   let currentErrors = {username: "", age:  "", gender: ""};
   let hasErrors= false
@@ -232,7 +245,7 @@ const handleSignUp = async () => {
 
       className={`w-full bg-[#23232d] border rounded-[8px] h-[48px] px-[16px] text-[16px] text-white focus:outline-none appearance-none cursor-pointer  transition-all text-white flex items-center
                   ${
-                    errors.username
+                    errors.gender
                       ? "border-red-500 focus:border-red-500"
                       : "border-[#23232c]   focus:border-[#a238ff] border-[1px]"
                   }
