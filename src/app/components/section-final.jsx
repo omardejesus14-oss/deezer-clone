@@ -190,6 +190,33 @@ export default function SectionFinal() {
 
 
       </div>
+
+      <div className="w-full bg-[#000f] flex justify-between py-4 px-10 ">
+
+        <div className="flex gap-1">
+          <Link href={"https://www.facebook.com/Deezer"}>icon1</Link>
+          <Link href={"https://www.facebook.com/Deezer"}>icon2</Link>
+          <Link href={"https://www.facebook.com/Deezer"}>icon3</Link>
+          <Link href={"https://www.facebook.com/Deezer"}>icon4</Link>
+        </div>
+
+        <div>
+        <Link href="/">
+         <img className="w-[150px]" src="/images/logodezer.png" alt="" />
+        </Link>
+         
+        </div>
+
+        <div>
+          <Link href="/"> <h4>© 2026 Deezer
+            Español</h4>
+          </Link>
+         
+        </div>
+
+
+
+      </div>
  
 
     </div>
