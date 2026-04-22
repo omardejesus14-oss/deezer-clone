@@ -4,6 +4,9 @@
 import { useState } from "react";
 import { IoChevronDown } from "react-icons/io5";
 import Link from "next/link";
+import { SlSocialFacebook } from "react-icons/sl";
+import { FaXTwitter,  FaInstagram } from "react-icons/fa6";
+import { FiYoutube } from "react-icons/fi";
 
 const faqs = [
   {
@@ -108,11 +111,17 @@ export default function SectionFinal() {
   {/* BOTONES */}
   <div className="flex gap-4 mb-12">
     <div className="w-[120px]   flex items-center gap-2">
-      <img className="w-full " src="https://cdn-assets.dzcdn.net/common/images/apple-store-badge/es-es.svg" alt="" />
+      <Link href="https://apps.apple.com/us/app/deezer-music-podcast-player/id292738169?itsct=apps_box&itscg=30200 ">
+       <img className="w-full " src="https://cdn-assets.dzcdn.net/common/images/apple-store-badge/es-es.svg" alt="" />
+      </Link>
+     
     </div>
 
     <div className="w-[130px]  flex items-center gap-2">
-   <img className="w-full " src="https://cdn-assets.dzcdn.net/common/images/play-store-badge/es-es.svg" alt="" />
+      <Link href="https://play.google.com/store/apps/details?id=deezer.android.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1" target="_blank">
+        <img className="w-full " src="https://cdn-assets.dzcdn.net/common/images/play-store-badge/es-es.svg" alt="" />
+      </Link>
+   
       
     </div>
   </div>
@@ -191,24 +200,26 @@ export default function SectionFinal() {
 
       </div>
 
-      <div className="w-full bg-[#000f] flex justify-between py-4 px-10 ">
+      {/* barra final */}
 
-        <div className="flex gap-1">
-          <Link href={"https://www.facebook.com/Deezer"}>icon1</Link>
-          <Link href={"https://www.facebook.com/Deezer"}>icon2</Link>
-          <Link href={"https://www.facebook.com/Deezer"}>icon3</Link>
-          <Link href={"https://www.facebook.com/Deezer"}>icon4</Link>
+      <div className="w-full bg-[#080812] flex flex-col md:flex-row md:flex-wrap gap-10 justify-between items-center py-15 px-20 ">
+
+        <div className="flex gap-4 order-2 md:order-1">
+          <Link href={"https://www.facebook.com/Deezer"}><SlSocialFacebook size={22} /></Link>
+          <Link href={"https://www.instagram.com/deezer"}>< FaXTwitter size={22} /></Link>
+          <Link href={"https://x.com/DeezerLatino"}><FaInstagram size={22}/></Link>
+          <Link href={"https://www.youtube.com/@deezerglobal"}><FiYoutube size={22} /></Link>
         </div>
 
-        <div>
+        <div className="order-1 md:order-2">
         <Link href="/">
-         <img className="w-[150px]" src="/images/logodezer.png" alt="" />
+         <img className="w-[130px]" src="https://cdn-files.dzcdn.net/cache/slash/images/common/logos/logo-horizontal-white-text.c409af08ede4db772948.svg" alt="" />
         </Link>
          
         </div>
 
-        <div>
-          <Link href="/"> <h4>© 2026 Deezer
+        <div className="order-3 md:order-3">
+          <Link href="/"> <h4 className="text-gray-400 text-[12px]">© 2026 Deezer
             Español</h4>
           </Link>
          

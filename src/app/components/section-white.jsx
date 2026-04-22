@@ -61,18 +61,17 @@ export default function SectionWhite() {
         </motion.div>
       </div>
 
+           {/* ULTIMA SECCION DE LA SECCION BLANCA */}
       <div className="w-full bg-white relative overflow-hidden ">
         {/* IMAGEN DE ARRIBA */}
-        <div className="w-full flex justify-center overflow-hidden pt-10 md:pt-20">
-          <img
-            src="https://cdn-images.dzcdn.net/images/misc/599ef65d99e9aaa5923c0f4c5b397566/0x1900-000000-80-0-0.png"
-            alt="deezer banner"
-            className=" object-cover w-[180%]  md:w-[60%]"
-          />
-        </div>
-
-        {/* CURVA ABAJO DE LA IMAGEN */}
-        <div className="absolute bottom-[55%] left-0 w-full h-[100px]" />
+  <div className="w-full overflow-hidden pt-10 md:pt-20 flex justify-center">
+  <img
+    src="https://cdn-images.dzcdn.net/images/misc/599ef65d99e9aaa5923c0f4c5b397566/0x1900-000000-80-0-0.png"
+    alt="deezer banner"
+    className="w-[180%] md:w-[60%] max-w-none object-cover object-center"
+  />
+</div>
+      
 
         {/* CONTENIDO */}
         <div className="relative z-10 flex flex-col items-center text-center px-6 py-16 gap-6">
