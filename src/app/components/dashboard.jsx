@@ -3,49 +3,71 @@
 import Sidebar from "./sidebar"
 import Player from "./player"
 import { songs } from "../../app/songs"
-import { use } from "react"
+import { useState, useEffect } from "react"
+
+
 
 export default function Dashboard() {
-  return (
-    <div className="h-screen flex flex-col bg-black text-white">
+  const [currentSong, setCurrentSong] = useState(null)
 
-      {/* CONTENIDO PRINCIPAL */}
+useEffect(() => {
+  if (songs.length > 0) {
+    setCurrentSong(songs[0])
+  }
+}, [])
+
+const currentIndex = songs.findIndex(s => s.id === currentSong?.id)
+
+const handleNext = () => {
+  if (currentIndex < songs.length - 1) {
+    setCurrentSong(songs[currentIndex + 1])
+  }
+}
+
+const handlePrev = () => {
+  if (currentIndex > 0) {
+    setCurrentSong(songs[currentIndex - 1])
+  }
+}
+
+  return (
+    <div className="h-screen flex flex-col bg-white text-black">
+
+      {/* CONTENIDO */}
       <div className="flex flex-1 overflow-hidden">
 
         {/* SIDEBAR */}
-        <aside className="w-64 bg-neutral-900 p-4">
-          <Sidebar />
-        </aside>
+        <Sidebar />
 
         {/* MAIN */}
-        <main className="flex-1 overflow-y-auto p-6">
-  <h1 className="text-xl mb-4">Canciones</h1>
+        <main className="flex-1 overflow-y-auto p-6 bg-white">
+          <h1 className="text-xl mb-4">Canciones</h1>
 
-  <div className="flex flex-col gap-2">
-    {songs.map((song) => (
-      <div
-        key={song.id}
-        onClick={() => setCurrentSong(song)}
-        className="flex items-center justify-between p-3 bg-neutral-900 hover:bg-neutral-800 rounded-lg cursor-pointer transition"
-      >
-        <div>
-          <p className="text-sm font-medium">{song.title}</p>
-          <p className="text-xs text-gray-400">{song.artist}</p>
-        </div>
-
-        <span className="text-xs text-gray-500">3:20</span>
-      </div>
-    ))}
-  </div>
-</main>
-
+          <div className="flex flex-col gap-2">
+            {songs.map((song) => (
+              <div
+                key={song.id}
+                onClick={() => {
+                  console.log("click:", song) // 👈 para debug
+                  setCurrentSong(song)
+                }}
+                className="p-3 bg-neutral-900 hover:bg-neutral-800 rounded-lg cursor-pointer"
+              >
+                <p>{song.title}</p>
+                <p className="text-sm text-gray-400">{song.artist}</p>
+              </div>
+            ))}
+          </div>
+        </main>
       </div>
 
       {/* PLAYER */}
-      <div className="h-20 bg-neutral-800 flex items-center justify-center">
-        <Player />
-      </div>
-
+      <Player 
+        song={currentSong}
+  onNext={handleNext}
+  onPrev={handlePrev}
+  hasNext={currentIndex < songs.length - 1}
+  hasPrev={currentIndex > 0} />
     </div>
   )
 }

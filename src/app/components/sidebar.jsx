@@ -2,7 +2,7 @@
 
 export default function Sidebar() {
   return (
-    <aside className="w-64 bg-neutral-950 p-4 flex flex-col gap-6">
+    <aside className="w-64 bg-[#f5f5f7] border-r border-gray-200 p-6">
       
       <h2 className="text-xl font-bold">Deezer</h2>
 
