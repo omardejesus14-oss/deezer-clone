@@ -2,16 +2,73 @@
 import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
-import { HiVolumeUp } from "react-icons/hi";
+import { HiVolumeUp, HiVolumeOff  } from "react-icons/hi";
+import { LuShuffle, LuRepeat} from "react-icons/lu"
+import { MdCast } from "react-icons/md"
+import { LuListMusic, LuSlidersHorizontal } from "react-icons/lu"
 
-export default function Player({ song, onNext, onPrev, hasNext, hasPrev  }) {
+
+
+export default function Player({ song,
+  onNext,
+  onPrev,
+  hasNext,
+  hasPrev,
+  isShuffle,
+  setIsShuffle,
+  isRepeat,
+  setIsRepeat }) {
   const audioRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(0.7)
+  const [isMuted, setIsMuted] = useState(false)
+  const [prevVolume, setPrevVolume] = useState(0.7)
+  const [isCasting, setIsCasting] = useState(false)
+const [isQueue, setIsQueue] = useState(false)
+const [isScreen, setIsScreen] = useState(false)
+  
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
+  const volumePercent = volume * 100
+
+  useEffect(() => {
+  if (audioRef.current) {
+    audioRef.current.volume = volume
+  }
+}, [volume]);
+
+const handleVolume = (e) => {
+  const value = Number(e.target.value)
+
+  setVolume(value)
+
+  if (value === 0) {
+    setIsMuted(true)
+  } else {
+    setIsMuted(false)
+    setPrevVolume(value)
+  }
+}
+
+
+useEffect(() => {
+  if (audioRef.current) {
+    audioRef.current.muted = isMuted
+  }
+}, [isMuted])
+const toggleMute = () => {
+  if (!isMuted) {
+    setPrevVolume(volume) // guarda
+    setVolume(0)          // barra baja a 0
+    setIsMuted(true)
+  } else {
+    setVolume(prevVolume) // recupera
+    setIsMuted(false)
+  }
+}
 
   // cargar canción
  useEffect(() => {
@@ -54,6 +111,30 @@ export default function Player({ song, onNext, onPrev, hasNext, hasPrev  }) {
       }
     };
   }, []);
+
+  // cuando termina la canción 
+useEffect(() => {
+  const audio = audioRef.current
+
+  const handleEnd = () => {
+    if (isRepeat) {
+      audio.currentTime = 0
+      audio.play()
+    } else {
+      onNext()
+    }
+  }
+
+  if (audio) {
+    audio.addEventListener("ended", handleEnd)
+  }
+
+  return () => {
+    if (audio) {
+      audio.removeEventListener("ended", handleEnd)
+    }
+  }
+}, [isRepeat, onNext])
 
   // play / pause
   const togglePlay = () => {
@@ -102,6 +183,16 @@ export default function Player({ song, onNext, onPrev, hasNext, hasPrev  }) {
         {/* BOTONES */}
         <div className="flex flex-col items-center gap-1">
           <div className="flex items-center gap-4">
+             <button
+      onClick={() => setIsShuffle(!isShuffle)}
+      className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
+        ${isShuffle ? "text-purple-600" : "text-gray-500 hover:bg-gray-200"}
+      `}
+    >
+      <LuShuffle size={18} />
+    </button>
+
+
             {/* ATRÁS */}
      <button
   onClick={onPrev}
@@ -138,9 +229,20 @@ export default function Player({ song, onNext, onPrev, hasNext, hasPrev  }) {
 >
   <MdSkipNext size={26} />
 </button>
+
+      <button
+      onClick={() => setIsRepeat(!isRepeat)}
+      className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
+        ${isRepeat ? "text-purple-600" : "text-gray-500 hover:bg-gray-200"}
+      `}
+    >
+      <LuRepeat size={18} />
+    </button>
+
+
           </div>
 
-          {/* 🔥 BARRA DE PROGRESO (DEBAJO Y MÁS PEQUEÑA) */}
+          {/* BARRA DE PROGRESO*/}
           <div className="flex items-center gap-2 text-[10px] text-gray-500 w-[310px]">
             <span>{formatTime(currentTime)}</span>
 
@@ -166,11 +268,81 @@ export default function Player({ song, onNext, onPrev, hasNext, hasPrev  }) {
             <span>{formatTime(duration)}</span>
           </div>
         </div>
+  
 
         {/* VOLUMEN */}
-        <div className="w-1/3 flex justify-end text-gray-500">
-          <HiVolumeUp size={20} />
-        </div>
+    <div className="w-1/3 flex justify-end items-center gap-2">
+
+  {/* (rayitas) */}
+  <button
+    className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition"
+  >
+    <LuListMusic size={18} />
+  </button>
+
+  {/* CAST */}
+  <button
+    className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition"
+  >
+    <MdCast size={18} />
+  </button>
+
+  {/*VOLUMEN  */}
+  <div className="relative group flex items-center h-12">
+
+    <button
+      onClick={toggleMute}
+      className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-600 hover:bg-gray-200 transition"
+    >
+      {isMuted || volume === 0 ? (
+        <HiVolumeOff size={18} />
+      ) : (
+        <HiVolumeUp size={18} />
+      )}
+    </button>
+
+    <div className="absolute bottom-12 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto">
+
+      <div className="bg-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] rounded-xl px-3 py-2">
+
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={handleVolume}
+          style={{
+            background: `linear-gradient(to right, #7c3aed ${volume * 100}%, #d1d5db ${volume * 100}%)`,
+          }}
+          className="w-[120px] h-[2px] appearance-none cursor-pointer rounded-lg
+
+          [&::-webkit-slider-thumb]:appearance-none
+          [&::-webkit-slider-thumb]:w-[8px]
+          [&::-webkit-slider-thumb]:h-[8px]
+          [&::-webkit-slider-thumb]:rounded-full
+          [&::-webkit-slider-thumb]:bg-white
+          [&::-webkit-slider-thumb]:opacity-0
+          [&::-webkit-slider-thumb]:transition
+
+          hover:[&::-webkit-slider-thumb]:opacity-100
+          "
+        />
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {/* SLIDERS  */}
+  <button
+    className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition"
+  >
+    <LuSlidersHorizontal size={18} />
+  </button>
+
+</div>
       </div>
 
       <audio ref={audioRef} />

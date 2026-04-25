@@ -9,6 +9,8 @@ import { useState, useEffect } from "react"
 
 export default function Dashboard() {
   const [currentSong, setCurrentSong] = useState(null)
+  const [isShuffle, setIsShuffle] = useState(false)
+  const [isRepeat, setIsRepeat] = useState(false)
 
 useEffect(() => {
   if (songs.length > 0) {
@@ -19,6 +21,17 @@ useEffect(() => {
 const currentIndex = songs.findIndex(s => s.id === currentSong?.id)
 
 const handleNext = () => {
+  if (isShuffle) {
+    let randomIndex
+
+    do {
+      randomIndex = Math.floor(Math.random() * songs.length)
+    } while (songs[randomIndex].id === currentSong.id)
+
+    setCurrentSong(songs[randomIndex])
+    return
+  }
+
   if (currentIndex < songs.length - 1) {
     setCurrentSong(songs[currentIndex + 1])
   }
@@ -63,11 +76,15 @@ const handlePrev = () => {
 
       {/* PLAYER */}
       <Player 
-        song={currentSong}
+      song={currentSong}
   onNext={handleNext}
   onPrev={handlePrev}
   hasNext={currentIndex < songs.length - 1}
-  hasPrev={currentIndex > 0} />
+  hasPrev={currentIndex > 0}
+  isShuffle={isShuffle}
+  setIsShuffle={setIsShuffle}
+  isRepeat={isRepeat}
+  setIsRepeat={setIsRepeat} />
     </div>
   )
 }
