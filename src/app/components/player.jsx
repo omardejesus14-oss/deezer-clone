@@ -165,7 +165,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="h-24 bg-[#f5f5f7] border-t border-gray-200 flex flex-col justify-center px-6">
+    <div className="h-18 bg-[#f5f5f7] border-t border-gray-200 flex flex-col justify-center px-6 border-r border-gray-400">
       {/* CONTROLES */}
       <div className="flex items-center justify-between">
         {/* INFO */}
