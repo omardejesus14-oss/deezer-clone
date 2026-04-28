@@ -4,6 +4,9 @@ import Sidebar from "./sidebar"
 import Player from "./player"
 import { songs } from "../../app/songs"
 import { useState, useEffect } from "react"
+import TopBar from "./topbar"
+import { createClient } from "../utils/supabase/client";
+import MainContent from "./main"
 
 
 
@@ -11,6 +14,19 @@ export default function Dashboard() {
   const [currentSong, setCurrentSong] = useState(null)
   const [isShuffle, setIsShuffle] = useState(false)
   const [isRepeat, setIsRepeat] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const [user, setUser] = useState(null)
+  const supabase = createClient();
+
+useEffect(() => {
+  const getUser = async () => {
+    const { data } = await supabase.auth.getUser()
+    setUser(data.user)
+  }
+
+  getUser()
+}, [])
 
 useEffect(() => {
   if (songs.length > 0) {
@@ -44,47 +60,49 @@ const handlePrev = () => {
 }
 
   return (
-    <div className="h-screen flex flex-col bg-white text-black">
+  <div className="h-screen flex flex-col bg-gray-100 text-black">
 
-      {/* CONTENIDO */}
-      <div className="flex flex-1 overflow-hidden">
+  {/* CONTENIDO SUPERIOR */}
+  <div className="flex flex-1 overflow-hidden">
 
-        {/* SIDEBAR */}
-        <Sidebar />
+    {/* SIDEBAR */}
+    <Sidebar />
 
-        {/* MAIN */}
-        <main className="flex-1 overflow-y-auto p-6 bg-white">
-          <h1 className="text-xl mb-4">Canciones</h1>
+    {/* ZONA DERECHA */}
+    <div className="flex-1 flex flex-col overflow-hidden">
 
-          <div className="flex flex-col gap-2">
-            {songs.map((song) => (
-              <div
-                key={song.id}
-                onClick={() => {
-                  console.log("click:", song) // 👈 para debug
-                  setCurrentSong(song)
-                }}
-                className="p-3 bg-neutral-900 hover:bg-neutral-800 rounded-lg cursor-pointer"
-              >
-                <p>{song.title}</p>
-                <p className="text-sm text-gray-400">{song.artist}</p>
-              </div>
-            ))}
-          </div>
-        </main>
-      </div>
+      {/* TOPBAR */}
+    <TopBar user={user} />
 
-      {/* PLAYER */}
-      <Player 
-      song={currentSong}
-  onNext={handleNext}
-  onPrev={handlePrev}
-  hasNext={currentIndex < songs.length - 1}
-  hasPrev={currentIndex > 0}
-  isShuffle={isShuffle}
-  setIsShuffle={setIsShuffle}
-  isRepeat={isRepeat}
-  setIsRepeat={setIsRepeat} />
+      {/* MAIN */}
+      <main className="flex-1 overflow-y-auto p-6 bg-white">
+       <MainContent 
+        songs={songs}
+        setCurrentSong={setCurrentSong}
+        currentSong={currentSong}
+        isPlaying={isPlaying}
+         setIsPlaying={setIsPlaying}
+        />
+      </main>
+
     </div>
+  </div>
+
+  {/* PLAYER */}
+  <Player
+    song={currentSong}
+    onNext={handleNext}
+    onPrev={handlePrev}
+    hasNext={currentIndex < songs.length - 1}
+    hasPrev={currentIndex > 0}
+    isShuffle={isShuffle}
+    setIsShuffle={setIsShuffle}
+    isRepeat={isRepeat}
+    setIsRepeat={setIsRepeat}
+    isPlaying={isPlaying}
+    setIsPlaying={setIsPlaying}
+  />
+
+</div>
   )
 }

@@ -17,10 +17,12 @@ export default function Player({ song,
   isShuffle,
   setIsShuffle,
   isRepeat,
-  setIsRepeat }) {
+  setIsRepeat,
+  isPlaying,
+  setIsPlaying }) {
   const audioRef = useRef(null);
 
-  const [isPlaying, setIsPlaying] = useState(false);
+ 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0.7)
@@ -29,6 +31,28 @@ export default function Player({ song,
   const [isCasting, setIsCasting] = useState(false)
 const [isQueue, setIsQueue] = useState(false)
 const [isScreen, setIsScreen] = useState(false)
+
+useEffect(() => {
+  if (song && audioRef.current) {
+    audioRef.current.src = song.url;
+    audioRef.current.load();
+
+    if (isPlaying) {
+      audioRef.current.play().catch(() => {});
+    }
+  }
+}, [song]);
+
+
+useEffect(() => {
+  if (!audioRef.current) return;
+
+  if (isPlaying) {
+    audioRef.current.play().catch(() => {});
+  } else {
+    audioRef.current.pause();
+  }
+}, [isPlaying]);
   
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
@@ -171,10 +195,16 @@ useEffect(() => {
         {/* INFO */}
         <div className="w-1/3">
           {song ? (
-            <>
+            <div className="flex items-center  gap-4">
+            <div className="w-12 h-12 items-center justify-center rounded bg-gray-200 ">
+              <img className="w-full h-full object-cover" src={song.image} alt={song.title} />
+            </div>
+            <div>
               <p className="text-sm font-medium text-black">{song.title}</p>
               <p className="text-xs text-gray-500">{song.artist}</p>
-            </>
+            </div>
+              
+            </div>
           ) : (
             <p className="text-sm text-gray-400">Selecciona una canción</p>
           )}
