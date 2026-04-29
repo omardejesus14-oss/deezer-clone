@@ -7,6 +7,7 @@ import { useState, useEffect } from "react"
 import TopBar from "./topbar"
 import { createClient } from "../utils/supabase/client";
 import MainContent from "./main"
+import MusicPage from "./music"
 
 
 
@@ -15,6 +16,7 @@ export default function Dashboard() {
   const [isShuffle, setIsShuffle] = useState(false)
   const [isRepeat, setIsRepeat] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false);
+  const [view, setView] = useState("home");
 
   const [user, setUser] = useState(null)
   const supabase = createClient();
@@ -76,13 +78,20 @@ const handlePrev = () => {
 
       {/* MAIN */}
       <main className="flex-1 overflow-y-auto p-6 bg-white">
-       <MainContent 
-        songs={songs}
-        setCurrentSong={setCurrentSong}
-        currentSong={currentSong}
-        isPlaying={isPlaying}
-         setIsPlaying={setIsPlaying}
-        />
+        {view === "home" && <MainContent
+          setView={setView}
+        />} 
+        
+        { view === "music" && (
+          <MusicPage 
+            songs={songs}
+            currentSong={currentSong}
+            setCurrentSong={setCurrentSong}
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+          />
+        )}
+
       </main>
 
     </div>
