@@ -5,8 +5,11 @@ import NavBar from "./nagvar";
 import Link from "next/link";
 import Custom from "./custon";
 import { GoStop } from "react-icons/go";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -61,6 +64,7 @@ export default function LoginForm() {
      
       if (data) {
         alert("has iniciado secion correctamente");
+        router.push("/dashboard");
       }
     } catch (error) {
       console.error(error);
