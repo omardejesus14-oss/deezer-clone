@@ -1,24 +1,12 @@
+"use client";
 
-// import RegisterPassword from "../components/password-form";
-
-// export default function page (){
-//     return(
-
-//         <div>
-//             <RegisterPassword />
-
-//         </div>
-//     )
-// }
-
+import { Suspense } from "react";
 import RegisterPassword from "../components/password-form";
 
-
 export default function Page() {
-
   return (
-    
-      <RegisterPassword/>
- 
+    <Suspense fallback={<div className="min-h-screen bg-black"></div>}>
+      <RegisterPassword />
+    </Suspense>
   );
 }
