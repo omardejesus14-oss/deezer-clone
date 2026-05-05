@@ -6,7 +6,7 @@ import { MdLibraryMusic } from "react-icons/md"
 
 
 
-export default function Sidebar() {
+export default function Sidebar({setView}) {
   return (
     <div className="w-[250px] h-screen bg-gray-100 flex flex-col justify-between border-r border-gray-400">
 
@@ -22,7 +22,7 @@ export default function Sidebar() {
         <nav className="flex flex-col gap-4 text-sm mt-8">
 
           {/* ACTIVO */}
-          <button className="flex items-center gap-3  rounded-lg hover:bg-gray-200 text-black font-bold ">
+          <button className="flex items-center gap-3  rounded-lg hover:bg-gray-200 text-black font-bold " onClick={() => setView("home")}>
             <HiHome size={26} />
             Inicio
           </button>
@@ -55,7 +55,7 @@ export default function Sidebar() {
 
           <p className="text-[16px] text-black mb-2 px-1 font-bold">Playlists</p>
 
-          <button className="flex items-center gap-1 px-1  py-2 rounded-lg hover:bg-gray-200  hover:w-[200px]  text-[15px]">
+          <button onClick={() => setView("favorites")} className="flex items-center gap-1 px-1  py-2 rounded-lg hover:bg-gray-200  hover:w-[200px]  text-[15px]">
           
             <img className="w-[45px]" src="https://cdn-images.dzcdn.net/images/cover/309913a32b70ad008c4e956d39e77fe3/100x100-000000-80-0-0.jpg" alt="" />
             Canciones favoritas

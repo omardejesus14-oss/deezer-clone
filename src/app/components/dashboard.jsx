@@ -9,6 +9,7 @@ import { createClient } from "../utils/supabase/client";
 import MainContent from "./main"
 import MusicPage from "./music"
 import { HiMenuAlt2, HiX } from "react-icons/hi";
+import FavoritesPage from "./favorites"
 
 
 
@@ -79,7 +80,7 @@ const handlePrev = () => {
            
             <button className="absolute top-2 right-4 text-gray-600" onClick={() => setIsMenuOpen(false)}><HiX size={24} /></button>
           </div>
-          <Sidebar /> 
+          <Sidebar setView={setView} /> 
         </aside>
 
         {/* OVERLAY */}
@@ -119,6 +120,13 @@ const handlePrev = () => {
                 setIsPlaying={setIsPlaying}
               />
             )}
+            {/* Nueva vista de favoritos */}
+  {view === "favorites" && (
+    <FavoritesPage 
+      setCurrentSong={setCurrentSong} 
+      setIsPlaying={setIsPlaying} 
+    />
+  )}
           </main>
         </div>
       </div>
@@ -131,7 +139,9 @@ const handlePrev = () => {
           setIsPlaying={setIsPlaying}
           onNext={handleNext}
           onPrev={handlePrev}
-          // ... resto de props
+          hasNext={currentIndex < songs.length - 1}
+          hasPrev={currentIndex > 0}
+          
         />
       </footer>
     </div>

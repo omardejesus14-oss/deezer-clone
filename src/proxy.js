@@ -1,10 +1,10 @@
 
 import { NextResponse } from "next/server";
-import { createClient } from "./app/utils/supabase/middleware";
+import { createClient } from "./app/utils/supabase/proxy";
 
 
 
-export async function middleware(request) {
+export async function proxy (request) {
   const { supabase, response } = createClient(request);
 
   // IMPORTANTE: getUser() es más seguro que getSession() en el middleware para Vercel

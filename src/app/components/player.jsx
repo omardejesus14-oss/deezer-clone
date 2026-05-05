@@ -2,14 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
-import { HiVolumeUp, HiVolumeOff  } from "react-icons/hi";
-import { LuShuffle, LuRepeat} from "react-icons/lu"
-import { MdCast } from "react-icons/md"
-import { LuListMusic, LuSlidersHorizontal } from "react-icons/lu"
+import { HiVolumeUp, HiVolumeOff } from "react-icons/hi";
+import { LuShuffle, LuRepeat } from "react-icons/lu";
+import { MdCast } from "react-icons/md";
+import { LuListMusic, LuSlidersHorizontal } from "react-icons/lu";
 
-
-
-export default function Player({ song,
+export default function Player({
+  song,
   onNext,
   onPrev,
   hasNext,
@@ -19,97 +18,96 @@ export default function Player({ song,
   isRepeat,
   setIsRepeat,
   isPlaying,
-  setIsPlaying }) {
+  setIsPlaying,
+}) {
   const audioRef = useRef(null);
 
- 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.7)
-  const [isMuted, setIsMuted] = useState(false)
-  const [prevVolume, setPrevVolume] = useState(0.7)
-  const [isCasting, setIsCasting] = useState(false)
-const [isQueue, setIsQueue] = useState(false)
-const [isScreen, setIsScreen] = useState(false)
+  const [volume, setVolume] = useState(0.7);
+  const [isMuted, setIsMuted] = useState(false);
+  const [prevVolume, setPrevVolume] = useState(0.7);
+  const [mounted, setMounted] = useState(false);
 
-useEffect(() => {
-  if (song && audioRef.current) {
-    audioRef.current.src = song.url;
-    audioRef.current.load();
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (song && audioRef.current) {
+      audioRef.current.src = song.url;
+      audioRef.current.load();
+
+      if (isPlaying) {
+        audioRef.current.play().catch(() => {});
+      }
+    }
+  }, [song]);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
 
     if (isPlaying) {
       audioRef.current.play().catch(() => {});
+    } else {
+      audioRef.current.pause();
     }
-  }
-}, [song]);
-
-
-useEffect(() => {
-  if (!audioRef.current) return;
-
-  if (isPlaying) {
-    audioRef.current.play().catch(() => {});
-  } else {
-    audioRef.current.pause();
-  }
-}, [isPlaying]);
-  
+  }, [isPlaying]);
 
   const progress = duration ? (currentTime / duration) * 100 : 0;
-  const volumePercent = volume * 100
+  const volumePercent = volume * 100;
 
   useEffect(() => {
-  if (audioRef.current) {
-    audioRef.current.volume = volume
-  }
-}, [volume]);
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
-const handleVolume = (e) => {
-  const value = Number(e.target.value)
+  const handleVolume = (e) => {
+    const value = Number(e.target.value);
 
-  setVolume(value)
+    setVolume(value);
 
-  if (value === 0) {
-    setIsMuted(true)
-  } else {
-    setIsMuted(false)
-    setPrevVolume(value)
-  }
-}
+    if (value === 0) {
+      setIsMuted(true);
+    } else {
+      setIsMuted(false);
+      setPrevVolume(value);
+    }
+  };
 
-
-useEffect(() => {
-  if (audioRef.current) {
-    audioRef.current.muted = isMuted
-  }
-}, [isMuted])
-const toggleMute = () => {
-  if (!isMuted) {
-    setPrevVolume(volume) // guarda
-    setVolume(0)          // barra baja a 0
-    setIsMuted(true)
-  } else {
-    setVolume(prevVolume) // recupera
-    setIsMuted(false)
-  }
-}
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.muted = isMuted;
+    }
+  }, [isMuted]);
+  const toggleMute = () => {
+    if (!isMuted) {
+      setPrevVolume(volume); // guarda
+      setVolume(0); // barra baja a 0
+      setIsMuted(true);
+    } else {
+      setVolume(prevVolume); // recupera
+      setIsMuted(false);
+    }
+  };
 
   // cargar canción
- useEffect(() => {
-  if (song && audioRef.current) {
-    const wasPlaying = isPlaying
+  useEffect(() => {
+    if (song && audioRef.current) {
+      const wasPlaying = isPlaying;
 
-    audioRef.current.src = song.url
-    setCurrentTime(0)
+      audioRef.current.src = song.url;
+      setCurrentTime(0);
 
-    if (wasPlaying) {
-      audioRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => console.log("bloqueado"))
+      if (wasPlaying) {
+        audioRef.current
+          .play()
+          .then(() => setIsPlaying(true))
+          .catch(() => console.log("bloqueado"));
+      }
     }
-  }
-}, [song])
+  }, [song]);
 
   // tiempo
   useEffect(() => {
@@ -136,29 +134,29 @@ const toggleMute = () => {
     };
   }, []);
 
-  // cuando termina la canción 
-useEffect(() => {
-  const audio = audioRef.current
+  // cuando termina la canción
+  useEffect(() => {
+    const audio = audioRef.current;
 
-  const handleEnd = () => {
-    if (isRepeat) {
-      audio.currentTime = 0
-      audio.play()
-    } else {
-      onNext()
-    }
-  }
+    const handleEnd = () => {
+      if (isRepeat) {
+        audio.currentTime = 0;
+        audio.play();
+      } else {
+        onNext();
+      }
+    };
 
-  if (audio) {
-    audio.addEventListener("ended", handleEnd)
-  }
-
-  return () => {
     if (audio) {
-      audio.removeEventListener("ended", handleEnd)
+      audio.addEventListener("ended", handleEnd);
     }
-  }
-}, [isRepeat, onNext])
+
+    return () => {
+      if (audio) {
+        audio.removeEventListener("ended", handleEnd);
+      }
+    };
+  }, [isRepeat, onNext]);
 
   // play / pause
   const togglePlay = () => {
@@ -196,14 +194,17 @@ useEffect(() => {
         <div className="w-1/3">
           {song ? (
             <div className="flex items-center  gap-4">
-            <div className="w-12 h-12 items-center justify-center rounded bg-gray-200 ">
-              <img className="w-full h-full object-cover" src={song.image} alt={song.title} />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-black">{song.title}</p>
-              <p className="text-xs text-gray-500">{song.artist}</p>
-            </div>
-              
+              <div className="w-12 h-12 items-center justify-center rounded bg-gray-200 ">
+                <img
+                  className="w-full h-full object-cover"
+                  src={song.image}
+                  alt={song.title}
+                />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-black">{song.title}</p>
+                <p className="text-xs text-gray-500">{song.artist}</p>
+              </div>
             </div>
           ) : (
             <p className="text-sm text-gray-400">Selecciona una canción</p>
@@ -213,30 +214,29 @@ useEffect(() => {
         {/* BOTONES */}
         <div className="flex flex-col items-center gap-1">
           <div className="flex items-center gap-4">
-             <button
-      onClick={() => setIsShuffle(!isShuffle)}
-      className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
+            <button
+              onClick={() => setIsShuffle(!isShuffle)}
+              className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
         ${isShuffle ? "text-purple-600" : "text-gray-500 hover:bg-gray-200"}
       `}
-    >
-      <LuShuffle size={18} />
-    </button>
-
+            >
+              <LuShuffle size={18} />
+            </button>
 
             {/* ATRÁS */}
-     <button
-  onClick={onPrev}
-  disabled={!hasPrev}
-  className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
+            <button
+              onClick={onPrev}
+              disabled={!hasPrev}
+              className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
     ${
       hasPrev
         ? "hover:bg-gray-300 text-gray-600"
         : "text-gray-400 cursor-not-allowed"
     }
   `}
->
-  <MdSkipPrevious size={26} />
-</button>
+            >
+              <MdSkipPrevious size={26} />
+            </button>
             {/* PLAY */}
             <button
               onClick={togglePlay}
@@ -247,29 +247,27 @@ useEffect(() => {
 
             {/* SIGUIENTE */}
             <button
-  onClick={onNext}
-  disabled={!hasNext}
-  className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
+              onClick={onNext}
+              disabled={!hasNext}
+              className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
     ${
       hasNext
         ? "hover:bg-gray-300 text-gray-600"
         : "text-gray-400 cursor-not-allowed"
     }
   `}
->
-  <MdSkipNext size={26} />
-</button>
+            >
+              <MdSkipNext size={26} />
+            </button>
 
-      <button
-      onClick={() => setIsRepeat(!isRepeat)}
-      className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
+            <button
+              onClick={() => setIsRepeat(!isRepeat)}
+              className={`w-[32px] h-[32px] flex items-center justify-center rounded-full transition
         ${isRepeat ? "text-purple-600" : "text-gray-500 hover:bg-gray-200"}
       `}
-    >
-      <LuRepeat size={18} />
-    </button>
-
-
+            >
+              <LuRepeat size={18} />
+            </button>
           </div>
 
           {/* BARRA DE PROGRESO*/}
@@ -285,94 +283,67 @@ useEffect(() => {
               style={{
                 background: `linear-gradient(to right, #7c3aed ${progress}%, #d1d5db ${progress}%)`,
               }}
-              className="w-full h-[2px] rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none
-              [&::-webkit-slider-thumb]:w-[10px]
-              [&::-webkit-slider-thumb]:h-[10px]
-              [&::-webkit-slider-thumb]:rounded-full
-              [&::-webkit-slider-thumb]:bg-white
-              [&::-webkit-slider-thumb]:opacity-0
-              [&::-webkit-slider-thumb]:transition
-              hover:[&::-webkit-slider-thumb]:opacity-100"
+              className="w-full h-[2px] rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[10px] [&::-webkit-slider-thumb]:h-[10px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:opacity-0 [&::-webkit-slider-thumb]:transition hover:[&::-webkit-slider-thumb]:opacity-100"
             />
 
             <span>{formatTime(duration)}</span>
           </div>
         </div>
-  
 
         {/* VOLUMEN */}
-    <div className="w-1/3 flex justify-end items-center gap-2">
+        <div className="w-1/3 flex justify-end items-center gap-2">
+          {/* (rayitas) */}
+          <button className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition">
+            <LuListMusic size={18} />
+          </button>
 
-  {/* (rayitas) */}
-  <button
-    className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition"
-  >
-    <LuListMusic size={18} />
-  </button>
+          {/* CAST */}
+          <button className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition">
+            <MdCast size={18} />
+          </button>
 
-  {/* CAST */}
-  <button
-    className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition"
-  >
-    <MdCast size={18} />
-  </button>
+          {/*VOLUMEN  */}
+          <div className="relative group flex items-center h-12">
+            <button
+              onClick={toggleMute}
+              className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-600 hover:bg-gray-200 transition"
+            >
+              {isMuted || volume === 0 ? (
+                <HiVolumeOff size={18} />
+              ) : (
+                <HiVolumeUp size={18} />
+              )}
+            </button>
 
-  {/*VOLUMEN  */}
-  <div className="relative group flex items-center h-12">
+            <div className="absolute bottom-12 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto">
+              <div className="bg-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] rounded-xl px-3 py-2">
 
-    <button
-      onClick={toggleMute}
-      className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-600 hover:bg-gray-200 transition"
-    >
-      {isMuted || volume === 0 ? (
-        <HiVolumeOff size={18} />
-      ) : (
-        <HiVolumeUp size={18} />
-      )}
-    </button>
 
-    <div className="absolute bottom-12 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto">
+                <input
+  type="range"
+  min="0"
+  max={duration || 0}
+  value={currentTime}
+  onChange={handleSeek}
+  style={
+    mounted
+      ? {
+          background: `linear-gradient(to right, #7c3aed ${progress}%, #d1d5db ${progress}%)`,
+        }
+      : {}
+  }
+  className="w-full h-[2px] rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[10px] [&::-webkit-slider-thumb]:h-[10px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:opacity-0 [&::-webkit-slider-thumb]:transition hover:[&::-webkit-slider-thumb]:opacity-100"
+/>
 
-      <div className="bg-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] rounded-xl px-3 py-2">
+              </div>
+            </div>
+          </div>
 
-        <input
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          value={volume}
-          onChange={handleVolume}
-          style={{
-            background: `linear-gradient(to right, #7c3aed ${volume * 100}%, #d1d5db ${volume * 100}%)`,
-          }}
-          className="w-[120px] h-[2px] appearance-none cursor-pointer rounded-lg
-
-          [&::-webkit-slider-thumb]:appearance-none
-          [&::-webkit-slider-thumb]:w-[8px]
-          [&::-webkit-slider-thumb]:h-[8px]
-          [&::-webkit-slider-thumb]:rounded-full
-          [&::-webkit-slider-thumb]:bg-white
-          [&::-webkit-slider-thumb]:opacity-0
-          [&::-webkit-slider-thumb]:transition
-
-          hover:[&::-webkit-slider-thumb]:opacity-100
-          "
-        />
-
-      </div>
-
-    </div>
-
-  </div>
-
-  {/* SLIDERS  */}
-  <button
-    className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition"
-  >
-    <LuSlidersHorizontal size={18} />
-  </button>
-
-</div>
+          {/* SLIDERS  */}
+          <button className="w-[32px] h-[32px] flex items-center justify-center rounded-full text-gray-500 hover:bg-gray-200 transition">
+            <LuSlidersHorizontal size={18} />
+          </button>
+        </div>
       </div>
 
       <audio ref={audioRef} />
