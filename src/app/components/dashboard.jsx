@@ -20,6 +20,7 @@ export default function Dashboard() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [view, setView] = useState("home");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [search, setSearch] = useState("")  
 
   const [user, setUser] = useState(null)
   const supabase = createClient();
@@ -95,7 +96,12 @@ const handlePrev = () => {
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden bg-white">
           
           {/* TOPBAR */}
-          <TopBar user={user} />
+          <TopBar
+            user={user} 
+              search={search}
+              setSearch={setSearch}
+               setView={setView}
+          />
 
           {/* BOTÓN HAMBURGUESA*/}
           <div className="md:hidden px-6 py-2 bg-white  flex items-center">
@@ -110,7 +116,8 @@ const handlePrev = () => {
 
           {/* MAIN CONTENT */}
           <main className="flex-1 overflow-y-auto p-4 md:p-6">
-            {view === "home" && <MainContent setView={setView} />}
+            {view === "home" && <MainContent setView={setView}
+             search={search}  />}
             {view === "music" && (
               <MusicPage 
                 songs={songs}
@@ -119,6 +126,8 @@ const handlePrev = () => {
                 setCurrentSong={setCurrentSong}
                 isPlaying={isPlaying}
                 setIsPlaying={setIsPlaying}
+                search={search}  
+               
               />
             )}
             {/* Nueva vista de favoritos */}

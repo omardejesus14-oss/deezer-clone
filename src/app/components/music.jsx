@@ -12,6 +12,8 @@ export default function MusicPage({
   setCurrentSong,
   isPlaying,
   setIsPlaying,
+  search,
+
 }) {
 
   
@@ -65,6 +67,22 @@ useEffect(() => {
 
 
 }, []);
+
+const query = search.toLowerCase().trim();
+
+  // 2. Filtramos
+  const filteredSongs = songs.filter((song) => {
+    // Si no hay nada escrito, mostramos todas
+    if (query === "") return true;
+
+    // Buscamos en título o artista
+    return (
+      song.title.toLowerCase().includes(query) ||
+      song.artist.toLowerCase().includes(query)
+    );
+  });
+
+ 
   return (
     <main className="flex-1 overflow-y-auto p-6 bg-white">
 
@@ -82,11 +100,14 @@ useEffect(() => {
       {/* GRID */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5">
 
-        {songs.map((song) => (
+        {filteredSongs.map((song) => (
           <div
             key={song.id}
             className="group cursor-pointer"
           >
+            {filteredSongs.length === 0 && (
+        <p className="text-center mt-10">No encontramos nada para "{search}"</p>
+      )}
             {/* CARD */}
             <div
               onClick={() => {

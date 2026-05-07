@@ -4,7 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { HiOutlineUserCircle } from "react-icons/hi2";
 
-export default function TopBar( { user } ) {
+export default function TopBar( { user, search, setSearch , setView} ) {
 
     const name =
     user?.user_metadata?.name ||
@@ -13,6 +13,17 @@ export default function TopBar( { user } ) {
     "U"
 
   const initial = name.charAt(0).toUpperCase()
+
+   const handleChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+
+  
+    if (value.trim().length > 0) {
+      setView("music");
+    }
+  };
+
 
   return (
     <div className="h-[70px] bg-white border-b border-gray-200 px-6 flex items-center justify-between">
@@ -23,6 +34,8 @@ export default function TopBar( { user } ) {
         <input
           type="text"
           placeholder="Artistas, canciones, podcasts... "
+          value={search}
+          onChange={(handleChange)}
           className="placeholder:text-gray-400 w-full bg-gray-200 rounded-[10px] py-3 pl-10  text-sm outline-none focus:ring-2 focus:ring-purple-500"
         />
 

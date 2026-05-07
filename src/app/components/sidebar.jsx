@@ -32,7 +32,8 @@ export default function Sidebar({setView}) {
             Explorar
           </button>
 
-          <button className="flex items-center gap-3   rounded-lg hover:bg-gray-200 text-black font-bold">
+          <button className="flex items-center gap-3   rounded-lg hover:bg-gray-200 text-black font-bold"
+          onClick={()=> setView("favorites")}>
             <MdLibraryMusic size={26} />
             Biblioteca
           </button>
