@@ -114,6 +114,7 @@ const handlePrev = () => {
             {view === "music" && (
               <MusicPage 
                 songs={songs}
+      
                 currentSong={currentSong}
                 setCurrentSong={setCurrentSong}
                 isPlaying={isPlaying}
@@ -123,8 +124,10 @@ const handlePrev = () => {
             {/* Nueva vista de favoritos */}
   {view === "favorites" && (
     <FavoritesPage 
-      setCurrentSong={setCurrentSong} 
-      setIsPlaying={setIsPlaying} 
+       currentSong={currentSong}
+  setCurrentSong={setCurrentSong}
+  isPlaying={isPlaying}
+  setIsPlaying={setIsPlaying}
     />
   )}
           </main>

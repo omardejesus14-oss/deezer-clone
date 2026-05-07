@@ -41,7 +41,7 @@ const handleFavorite = async (songId) => {
 
 
 // 1. Cargar favoritos al iniciar
-// En tu MusicPage.jsx
+
 useEffect(() => {
   let isMounted = true; // Control de montaje
 
