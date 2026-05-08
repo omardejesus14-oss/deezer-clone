@@ -186,9 +186,7 @@ if (!mounted) {
   // 4. El tamaño (más grande en el centro)
   const size = 20 + (8 - distance) * 22; 
 
-  // 5. El Factor de Movimiento (Acordeón)
-  // Las del centro (distance cerca de 0) tienen factor alto.
-  // Las de los bordes (distance cerca de 8) tienen factor bajo.
+  
   const moveFactor = (8- distance) / 1;
 
   return (
@@ -204,10 +202,11 @@ if (!mounted) {
       opacity="0.8"
       style={{
         filter: 'drop-shadow(0 0 3px rgba(188, 119, 255, 0.4))',
-        // Aquí usamos el moveFactor que acabamos de calcular arriba
+      
+
         transform: `translateX(${mousePos.x * moveFactor}px)`,
         transition: 'transform 0.2s ease-out',
-        transformBox: 'fill-box', // Ayuda a que la transformación sea más precisa en SVGs
+        transformBox: 'fill-box', 
         transformOrigin: 'center'
       }}
     />

@@ -67,7 +67,7 @@ export default function NavBar({ variant = "simple" }) {
               </div>
             </div>
 
-            {/* MENU MOVIL (EL DE LA IMAGEN) */}
+            {/* MENU MOVIL */}
             {isOpen && (
               <div className="fixed inset-0 bg-[#000000] z-[100] flex flex-col gap-8">
                 {/* Header del menú */}
