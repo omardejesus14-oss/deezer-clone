@@ -70,7 +70,7 @@ export default function RegisterEmail() {
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
-                if (!dirty) setDirty(true); // 👈 SOLO para botón
+                if (!dirty) setDirty(true); //SOLO para botón
               }}
             />
             {touched && !isValid && (
