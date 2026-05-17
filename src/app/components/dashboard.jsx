@@ -153,6 +153,10 @@ const handlePrev = () => {
           onPrev={handlePrev}
           hasNext={currentIndex < songs.length - 1}
           hasPrev={currentIndex > 0}
+          isRepeat={isRepeat}
+          setIsRepeat={setIsRepeat}
+          isShuffle={isShuffle}
+          setIsShuffle={setIsShuffle}
           
         />
       </footer>

@@ -33,6 +33,7 @@ export default function Player({
     setMounted(true);
   }, []);
 
+  //cargar cancion
   useEffect(() => {
     if (song && audioRef.current) {
       audioRef.current.src = song.url;
@@ -81,6 +82,7 @@ export default function Player({
       audioRef.current.muted = isMuted;
     }
   }, [isMuted]);
+
   const toggleMute = () => {
     if (!isMuted) {
       setPrevVolume(volume); // guarda
@@ -134,7 +136,7 @@ export default function Player({
     };
   }, []);
 
-  // cuando termina la canción
+  // cuando termina la canción se repite o pasa a la siguiente
   useEffect(() => {
     const audio = audioRef.current;
 
@@ -316,25 +318,24 @@ export default function Player({
             </button>
 
             <div className="absolute bottom-12 right-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto">
-              <div className="bg-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] rounded-xl px-3 py-2">
-
-
+              <div className=" w-[200px] bg-white shadow-[0_4px_12px_rgba(0,0,0,0.1)] rounded-xl px-2 py-2">
                 <input
-  type="range"
-  min="0"
-  max={duration || 0}
-  value={currentTime}
-  onChange={handleSeek}
-  style={
-    mounted
-      ? {
-          background: `linear-gradient(to right, #7c3aed ${progress}%, #d1d5db ${progress}%)`,
-        }
-      : {}
-  }
-  className="w-full h-[2px] rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[10px] [&::-webkit-slider-thumb]:h-[10px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:opacity-0 [&::-webkit-slider-thumb]:transition hover:[&::-webkit-slider-thumb]:opacity-100"
-/>
-
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.01" // Permite mover el volumen suavemente de 0.01 en 0.01
+                  value={isMuted ? 0 : volume}
+                  onChange={handleVolume} // Usa su función de volumen
+                  style={
+                    mounted
+                      ? {
+                        
+                          background: `linear-gradient(to right, #7c3aed ${isMuted ? 0 : volumePercent}%, #d1d5db ${isMuted ? 0 : volumePercent}%)`,
+                        }
+                      : {}
+                  }
+                  className="w-full h-[2px] rounded-lg appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[10px] [&::-webkit-slider-thumb]:h-[10px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:opacity-0 [&::-webkit-slider-thumb]:transition hover:[&::-webkit-slider-thumb]:opacity-100"
+                />
               </div>
             </div>
           </div>

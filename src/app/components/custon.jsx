@@ -10,7 +10,7 @@ export default function Custom({
   value,
   error,
   isValid,
-   onBlur
+  onBlur
 }) {
   const [mostrar, setMostrar] = useState(false);
 
@@ -52,7 +52,7 @@ export default function Custom({
         >
           {alternateEyes()}
         </div>
-      )}
+      )} 
     </div>
   );
 }
